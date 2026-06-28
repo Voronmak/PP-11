@@ -12,7 +12,7 @@ namespace пп_11.Models
 
         public string Name { get; set; }
 
-        public string Discribe { get; set; }
+        public string? Discribe { get; set; }
 
         public Role(int id, string name, string discribe) 
         { 

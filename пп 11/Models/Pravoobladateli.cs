@@ -13,7 +13,7 @@ namespace пп_11.Models
         public int Id { get; set; }
 
         public string Name { get; set; }
-
+         
         public int INN { get; set; }
 
         public int ORGN { get; set; }

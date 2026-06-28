@@ -17,7 +17,7 @@ namespace пп_11.Models
         public string? Dicribe { get; set; }
 
         public TypeOfRight(int id, string name, int codeName, string? dicribe)
-        {
+        { 
             Id = id;
             Name = name;
             CodeName = codeName;

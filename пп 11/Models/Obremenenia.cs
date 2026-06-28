@@ -13,7 +13,7 @@ namespace пп_11.Models
 
         public string TypeOfObremenenia { get; set; }
 
-        public int NumberOfRegistration { get; set; }
+        public int NumberOfRegistration { get; set; } 
 
         public DateTime DataOfRegistration { get; set; }
 

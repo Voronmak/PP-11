@@ -14,7 +14,7 @@ namespace пп_11.Models
         public int NumberOfRegistration { get; set; }
 
         public DateTime DateOfRegistration { get; set; }
-
+         
         public string DocumentOsnovanie { get; set; }
 
         public bool StatusOfRight { get; set; }

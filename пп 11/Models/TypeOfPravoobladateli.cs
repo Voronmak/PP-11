@@ -18,6 +18,6 @@ namespace пп_11.Models
             Name = name;
         }
 
-        public TypeOfPravoobladateli() { }
+        public TypeOfPravoobladateli() { } 
     }
 }

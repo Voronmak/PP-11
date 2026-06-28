@@ -18,7 +18,7 @@ namespace пп_11.Models
         { 
             Id = id;
             Name = name;
-            Discribe = discribe;
+            Discribe = discribe; 
         }
 
         public Role() { }

@@ -17,7 +17,7 @@ namespace пп_11.Models
 
         public bool Status { get; set; }
 
-        public DateTime DateCreate { get; set; }
+        public DateTime DateCreate { get; set; } 
 
         public int IdRole { get; set; }
 

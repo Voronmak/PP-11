@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using пп_11.Data;
 
 namespace пп_11
 {
@@ -19,9 +20,12 @@ namespace пп_11
     /// </summary>
     public partial class Login : Window
     {
+        private ContextDB db;
         public Login()
         {
             InitializeComponent();
+            db = new ContextDB();
+            db.Database.EnsureCreated();
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)

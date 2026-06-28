@@ -9,4 +9,32 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Images\free-icon-calendar-add-17325064.png" />
+    <None Remove="Images\free-icon-delete-folder-17807612.png" />
+    <None Remove="Images\free-icon-editing-2356780.png" />
+    <None Remove="Images\free-icon-refresh-7037662.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.SqlServer.Server" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\free-icon-calendar-add-17325064.png" />
+    <Resource Include="Images\free-icon-delete-folder-17807612.png" />
+    <Resource Include="Images\free-icon-editing-2356780.png" />
+    <Resource Include="Images\free-icon-refresh-7037662.png" />
+  </ItemGroup>
+
 </Project>

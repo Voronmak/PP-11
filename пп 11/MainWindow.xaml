@@ -5,8 +5,185 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:пп_11"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="500">
+        Title="MainWindow" Height="670" Width="1020">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.3*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Система учета земель сельскохозяйственного назначения" Background="#FF364A52" FontFamily="Georgia" 
+               FontSize="30" FontWeight="Bold" VerticalContentAlignment="Center"
+               HorizontalContentAlignment="Center" Foreground="White"/>
+
+        <TabControl Grid.Row="1">
+            <TabItem Header="Земельные участки">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="0.8*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id Земельного участка" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="Кадастровый номер" Binding="{Binding KadastrNumber}"/>
+                            <DataGridTextColumn Header="Адрес" Binding="{Binding Addres}"/>
+                            <DataGridTextColumn Header="Площадь" Binding="{Binding Square}"/>
+                            <DataGridTextColumn Header="Категория земель" Binding="{Binding TypeOfGround}"/>
+                            <DataGridTextColumn Header="Кадастровая стоимость" Binding="{Binding KadastrPrice}"/>
+                            <DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
+                        <Label Content="Кадастровый номер" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="KadastrNumberTextBoxGroundPlace"/>
+                        <Label Content="Адрес" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="AddresTextBoxGroundPlace"/>
+                        <Label Content="Площадь" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="SquareTextBoxGroundPlace"/>
+                        <Label Content="Категория земель" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <ComboBox Margin="5, -5, 5, 5" Height="20" x:Name="TypeOfGroundTextBoxGroundPlace">
+                            <ComboBox.Background>
+                                <LinearGradientBrush EndPoint="0,1">
+                                    <GradientStop Color="#FFF0F0F0" Offset="0.387"/>
+                                    <GradientStop Color="#FFA5A5A5" Offset="1"/>
+                                </LinearGradientBrush>
+                            </ComboBox.Background>
+                        </ComboBox>
+                        <Label Content="Кадастровая стоимость" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="KadastrPriceTextBoxGroundPlace"/>
+                        <Label Content="Статус" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <ComboBox Margin="5, -5, 5, 5" Height="20" x:Name="StatusTextBoxGroundPlace">
+                            <ComboBox.Background>
+                                <LinearGradientBrush EndPoint="0,1">
+                                    <GradientStop Color="#FFF0F0F0"/>
+                                    <GradientStop Color="#FFBFBFBF" Offset="1"/>
+                                </LinearGradientBrush>
+                            </ComboBox.Background>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                    Margin="10,5,5,5" Height="25" Orientation="Horizontal" Background="#FF83F9AA"
+                                    x:Name="AddButtonGroundPlace" MouseLeftButtonDown="AddButtonGroundPlace_MouseLeftButtonDown">
+                            <Image Source="/Images/free-icon-calendar-add-17325064.png" Height="25"/>
+                            <Label Content="Добавить"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    Margin="105,5,5,5" Height="25" Orientation="Horizontal" Background="#FFF98383"
+                                    x:Name="DeleteButtonGroundPlace" MouseLeftButtonDown="DeleteButtonGroundPlace_MouseLeftButtonDown">
+                                <Image Source="/Images/free-icon-delete-folder-17807612.png" Height="25" />
+                                <Label Content="Удалить"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    Margin="95,5,5,5" Height="25" Orientation="Horizontal" Background="#FF8395F9"
+                                    x:Name="EditButtonGroundPlace" MouseLeftButtonDown="ChangeButtonGroundPlace_MouseLeftButtonDown">
+                                <Image Source="/Images/free-icon-editing-2356780.png"  Height="25" />
+                                <Label Content="Редактировать"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"
+                                    Margin="5" Height="25" Orientation="Horizontal" Background="#FF9C83F9"
+                                    x:Name="RefreshButtonGroundPlace" MouseLeftButtonDown="ChangeButtonGroundPlace_MouseLeftButtonDown">
+                        <Image Source="/Images/free-icon-refresh-7037662.png"  Height="25" />
+                        <Label Content="Обновить"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Права">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="0.8*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id Права" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="Номер регистрации" Binding="{Binding NumberOfRegistration}"/>
+                            <DataGridTextColumn Header="Дата регистрации" Binding="{Binding DateOfRegistration }"/>
+                            <DataGridTextColumn Header="Документ основание" Binding="{Binding DocumentOsnovanie}"/>
+                            <DataGridTextColumn Header="Статус права" Binding="{Binding StatusOfRight}"/>
+                            <DataGridTextColumn Header="Id земельного участка" Binding="{Binding IdGroundPlace}"/>
+                            <DataGridTextColumn Header="Id правообладателя" Binding="{Binding IdPravoobladateli}"/>
+                            <DataGridTextColumn Header="Id вида права" Binding="{Binding IdTypeOfRight}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
+                        <Label Content="Номер регистрации" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="NumberOfRegistrationTextBoxRights"/>
+                        <Label Content="Дата регистрации" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <DatePicker Margin="5, -5, 5, 5" Height="25" x:Name="DateOfRegistrationTextBoxRights"/>
+                        <Label Content="Документ основание" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="DocumentOsnovanieTextBoxRights"/>
+                        <Label Content="Статус права" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <CheckBox Margin="5, -5, 5, 5" Height="20" x:Name="StatusOfRightTextBoxRights"/>
+                        <Label Content="Id земельного участка" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="IdGroundPlaceTextBoxRights"/>
+                        <Label Content="Id правообладателя" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="IdPravoobladateliTextBoxRights"/>
+                        <Label Content="Id вида права" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="IdTypeOfRightTextBoxRights"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                    Margin="10,5,5,5" Height="25" Orientation="Horizontal" Background="#FF83F9AA"
+                                    x:Name="AddButtonRight" MouseLeftButtonDown="AddButtonRight_MouseLeftButtonDown">
+                            <Image Source="/Images/free-icon-calendar-add-17325064.png" Height="25"/>
+                            <Label Content="Добавить"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    Margin="105,5,5,5" Height="25" Orientation="Horizontal" Background="#FFF98383"
+                                    x:Name="DeleteButtonRight" MouseLeftButtonDown="DeleteButtonRight_MouseLeftButtonDown">
+                                <Image Source="/Images/free-icon-delete-folder-17807612.png" Height="25" />
+                                <Label Content="Удалить"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    Margin="95,5,5,5" Height="25" Orientation="Horizontal" Background="#FF8395F9"
+                                    x:Name="EditButtonRight" MouseLeftButtonDown="EditButtonRight_MouseLeftButtonDown">
+                                <Image Source="/Images/free-icon-editing-2356780.png"  Height="25" />
+                                <Label Content="Редактировать"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"
+                                    Margin="5" Height="25" Orientation="Horizontal" Background="#FF9C83F9"
+                                    x:Name="RefreshButton1" MouseLeftButtonDown="RefreshButtonGroundPlace_MouseLeftButtonDown">
+                        <Image Source="/Images/free-icon-refresh-7037662.png"  Height="25" />
+                        <Label Content="Обновить"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            
+        </TabControl>
     </Grid>
 </Window>

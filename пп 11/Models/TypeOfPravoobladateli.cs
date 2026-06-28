@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace пп_11.Models
+{
+    internal class TypeOfPravoobladateli
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public TypeOfPravoobladateli(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+
+        public TypeOfPravoobladateli() { }
+    }
+}

@@ -27,6 +27,9 @@ namespace пп_11
         {
             TypeOfGroundTextBoxGroundPlace.ItemsSource = Enum.GetValues(typeof(TypeOfGround));
             StatusTextBoxGroundPlace.ItemsSource = Enum.GetValues(typeof(Status));
+            TypeOfObremeneniaComboBoxObremenenia.ItemsSource = Enum.GetValues(typeof(TypeOfObremenenia));
+            YstanovlFaceTextBoxObremenenia.ItemsSource = Enum.GetValues(typeof(YstanovlFace));
+            StatusComboBoxObremenenia.ItemsSource = Enum.GetValues(typeof(StatusObremenenia));
         }
 
         #region ground
@@ -63,11 +66,14 @@ namespace пп_11
         }
         #endregion
 
+        #region ground
         private void RefreshButtonGroundPlace_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
         }
+        #endregion
 
+        #region role
         private void AddButtonRole_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
@@ -82,7 +88,9 @@ namespace пп_11
         {
 
         }
+        #endregion
 
+        #region user
         private void AddButtonUser_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
@@ -97,7 +105,9 @@ namespace пп_11
         {
 
         }
+        #endregion
 
+        #region typeofright
         private void EditButtonTypeOfRight_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
@@ -112,7 +122,9 @@ namespace пп_11
         {
 
         }
+        #endregion
 
+        #region obremenenia
         private void EditButtonObremenenia_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
@@ -127,5 +139,40 @@ namespace пп_11
         {
 
         }
+        #endregion
+
+        #region pravoobladateli
+        private void EditButtonPravoobladateli_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void DeleteButtonPravoobladateli_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void AddButtonPravoobladateli_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region typeofpravoobladateli
+        private void EditButtonTypeOfPravoobladateli_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void DeleteButtonTypeOfPravoobladateli_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void AddButtonTypeOfPravoobladateli_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+        #endregion
     }
 }

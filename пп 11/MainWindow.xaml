@@ -29,7 +29,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False">
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="GroundPlaceDataGrid">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id Земельного участка" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Кадастровый номер" Binding="{Binding KadastrNumber}"/>
@@ -118,7 +118,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False">
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="RightDataGrid">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id Права" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Номер регистрации" Binding="{Binding NumberOfRegistration}"/>
@@ -196,7 +196,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False">
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="RoleDataGrid">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id Роли" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Наименование" Binding="{Binding Name}"/>
@@ -259,7 +259,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False">
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="UserDataGrid">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id Пользователя" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Логин" Binding="{Binding Name}"/>
@@ -331,7 +331,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False">
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="TypeOfRightDataGrid">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id Вида Права" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Наименование" Binding="{Binding Name}"/>
@@ -397,7 +397,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False">
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="ObremeneneiaDataGrid">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id Обременения" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Тип обременения" Binding="{Binding TypeOfObremenenia}"/>
@@ -422,7 +422,7 @@
                         <Label Content="Установленное лицо" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
                         <ComboBox Margin="5, -5, 5, 5" Height="20" x:Name="YstanovlFaceTextBoxObremenenia"/>
                         <Label Content="Статус" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
-                        <ComboBox Margin="5, -5, 5, 5" Height="20" x:Name="StatusTextBoxObremenenia"/>
+                        <ComboBox Margin="5, -5, 5, 5" Height="20" x:Name="StatusComboBoxObremenenia"/>
                         <Label Content="Право" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
                         <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="PravoTextBoxObremenenia"/>
                     </StackPanel>
@@ -457,6 +457,154 @@
                     <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"
                                     Margin="5" Height="25" Orientation="Horizontal" Background="#FF9C83F9"
                                     x:Name="RefreshButton5" MouseLeftButtonDown="RefreshButtonGroundPlace_MouseLeftButtonDown">
+                        <Image Source="/Images/free-icon-refresh-7037662.png"  Height="25" />
+                        <Label Content="Обновить"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Правообладатели">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="0.8*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="PravoobladateliDataGrid">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id Правообладателя" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="ФИО" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="ИНН" Binding="{Binding INN}"/>
+                            <DataGridTextColumn Header="ОГРН" Binding="{Binding ORGN}"/>
+                            <DataGridTextColumn Header="КПП" Binding="{Binding KPP}"/>
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}"/>
+                            <DataGridTextColumn Header="Электронная почта" Binding="{Binding Email}"/>
+                            <DataGridTextColumn Header="Адрес регистрации" Binding="{Binding Addres}"/>
+                            <DataGridTextColumn Header="Типы правообладателей" Binding="{Binding IdTypeOfPravoobladateli}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
+                        <Label Content="ФИО" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="NameTextBoxPravoobladateli"/>
+                        <Label Content="ИНН" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="INNTextBoxPravoobladateli"/>
+                        <Label Content="ОГРН" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="ORGNTextBoxPravoobladateli"/>
+                        <Label Content="КПП" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="KPPTextBoxPravoobladateli"/>
+                        <Label Content="Телефон" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="PhoneTextBoxPravoobladateli"/>
+                        <Label Content="Электронная почта" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="EmailTextBoxPravoobladateli"/>
+                        <Label Content="Адрес регистрации" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="AddresTextBoxPravoobladateli"/>
+                        <Label Content="Типы правообладателей" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="IdTypeOfPravoobladateliTextBoxPravoobladateli"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                    Margin="10,5,5,5" Height="25" Orientation="Horizontal" Background="#FF83F9AA"
+                                    x:Name="AddButtonPravoobladateli" MouseLeftButtonDown="AddButtonPravoobladateli_MouseLeftButtonDown">
+                            <Image Source="/Images/free-icon-calendar-add-17325064.png" Height="25"/>
+                            <Label Content="Добавить"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    Margin="105,5,5,5" Height="25" Orientation="Horizontal" Background="#FFF98383"
+                                    x:Name="DeleteButtonPravoobladateli" MouseLeftButtonDown="DeleteButtonPravoobladateli_MouseLeftButtonDown">
+                                <Image Source="/Images/free-icon-delete-folder-17807612.png" Height="25" />
+                                <Label Content="Удалить"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    Margin="95,5,5,5" Height="25" Orientation="Horizontal" Background="#FF8395F9"
+                                    x:Name="EditButtonPravoobladateli" MouseLeftButtonDown="EditButtonPravoobladateli_MouseLeftButtonDown">
+                                <Image Source="/Images/free-icon-editing-2356780.png"  Height="25" />
+                                <Label Content="Редактировать"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"
+                                    Margin="5" Height="25" Orientation="Horizontal" Background="#FF9C83F9"
+                                    x:Name="RefreshButton6" MouseLeftButtonDown="RefreshButtonGroundPlace_MouseLeftButtonDown">
+                        <Image Source="/Images/free-icon-refresh-7037662.png"  Height="25" />
+                        <Label Content="Обновить"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Тип правообладателей">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="0.8*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="TypeOfPravoobladateliDataGrid">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id Правообладателя" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="ФИО" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="ИНН" Binding="{Binding INN}"/>
+                            <DataGridTextColumn Header="ОГРН" Binding="{Binding ORGN}"/>
+                            <DataGridTextColumn Header="КПП" Binding="{Binding KPP}"/>
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}"/>
+                            <DataGridTextColumn Header="Электронная почта" Binding="{Binding Email}"/>
+                            <DataGridTextColumn Header="Адрес регистрации" Binding="{Binding Addres}"/>
+                            <DataGridTextColumn Header="Типы правообладателей" Binding="{Binding IdTypeOfPravoobladateli}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
+                        <Label Content="Наименование типа" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
+                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="NameTextBoxTypeOfPravoobladateli"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                    Margin="10,5,5,5" Height="25" Orientation="Horizontal" Background="#FF83F9AA"
+                                    x:Name="AddButtonTypeOfPravoobladateli" MouseLeftButtonDown="AddButtonTypeOfPravoobladateli_MouseLeftButtonDown">
+                            <Image Source="/Images/free-icon-calendar-add-17325064.png" Height="25"/>
+                            <Label Content="Добавить"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    Margin="105,5,5,5" Height="25" Orientation="Horizontal" Background="#FFF98383"
+                                    x:Name="DeleteButtonTypeOfPravoobladateli" MouseLeftButtonDown="DeleteButtonTypeOfPravoobladateli_MouseLeftButtonDown">
+                                <Image Source="/Images/free-icon-delete-folder-17807612.png" Height="25" />
+                                <Label Content="Удалить"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    Margin="95,5,5,5" Height="25" Orientation="Horizontal" Background="#FF8395F9"
+                                    x:Name="EditButtonTypeOfPravoobladateli" MouseLeftButtonDown="EditButtonTypeOfPravoobladateli_MouseLeftButtonDown">
+                                <Image Source="/Images/free-icon-editing-2356780.png"  Height="25" />
+                                <Label Content="Редактировать"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"
+                                    Margin="5" Height="25" Orientation="Horizontal" Background="#FF9C83F9"
+                                    x:Name="RefreshButton7" MouseLeftButtonDown="RefreshButtonGroundPlace_MouseLeftButtonDown">
                         <Image Source="/Images/free-icon-refresh-7037662.png"  Height="25" />
                         <Label Content="Обновить"/>
                     </StackPanel>

@@ -12,9 +12,8 @@ namespace пп_11.Models
 
         public string Name { get; set; }
 
-        public TypeOfPravoobladateli(int id, string name)
+        public TypeOfPravoobladateli(string name)
         {
-            Id = id;
             Name = name;
         }
 

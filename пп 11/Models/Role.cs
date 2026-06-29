@@ -14,9 +14,8 @@ namespace пп_11.Models
 
         public string? Discribe { get; set; }
 
-        public Role(int id, string name, string discribe) 
+        public Role(string name, string discribe) 
         { 
-            Id = id;
             Name = name;
             Discribe = discribe; 
         }

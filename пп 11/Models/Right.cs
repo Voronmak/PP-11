@@ -34,9 +34,8 @@ namespace пп_11.Models
         [ForeignKey(nameof(IdTypeOfRight))]
         public TypeOfRight? TypeOfRight { get; set; }
 
-        public Right(int id, int numberOfRegistration, DateTime dateOfRegistration, string documentOsnovanie, bool statusOfRight, int idGroundPlace, int idPravoobladateli, int idTypeOfRight)
+        public Right(int numberOfRegistration, DateTime dateOfRegistration, string documentOsnovanie, bool statusOfRight, int idGroundPlace, int idPravoobladateli, int idTypeOfRight)
         {
-            Id = id;
             NumberOfRegistration = numberOfRegistration;
             DateOfRegistration = dateOfRegistration;
             DocumentOsnovanie = documentOsnovanie;

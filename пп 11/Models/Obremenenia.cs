@@ -21,22 +21,18 @@ namespace пп_11.Models
 
         public string YstanovlFace { get; set; }
 
-        public string Status { get; set; }
-
         public int IdRight { get; set; }
 
         [ForeignKey(nameof(IdRight))]
         public Right? Right { get; set; }
 
-        public Obremenenia(int id, string typeOfObremenenia, int numberOfRegistration, DateTime dataOfRegistration, string? discribe, string ystanovlFace, string status, int idRight)
+        public Obremenenia(string typeOfObremenenia, int numberOfRegistration, DateTime dataOfRegistration, string? discribe, string ystanovlFace, int idRight)
         {
-            Id = id;
             TypeOfObremenenia = typeOfObremenenia;
             NumberOfRegistration = numberOfRegistration;
             DataOfRegistration = dataOfRegistration;
             Discribe = discribe;
             YstanovlFace = ystanovlFace;
-            Status = status;
             IdRight = idRight;
         }
 

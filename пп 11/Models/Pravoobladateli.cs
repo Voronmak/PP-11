@@ -31,9 +31,8 @@ namespace пп_11.Models
        [ForeignKey(nameof(IdTypeOfPravoobladateli))]
        public TypeOfPravoobladateli? TypeOfPravoobladateli { get; set; } 
 
-       public Pravoobladateli(int id, string name, int inn, int orgn, int kpp, int phone, string email, string addres, int idtypeofpravoobladateli)
+       public Pravoobladateli(string name, int inn, int orgn, int kpp, int phone, string email, string addres, int idtypeofpravoobladateli)
         {
-            Id = id;
             Name = name;
             INN = inn;
             ORGN = orgn;

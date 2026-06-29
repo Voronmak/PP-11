@@ -22,9 +22,8 @@ namespace пп_11.Models
 
         public string Status { get; set; }
 
-        public GroundPlace(int id, int kadastrNumber, string addres, double square, string typeOfGround, double kadastrPrice, string status)
+        public GroundPlace(int kadastrNumber, string addres, double square, string typeOfGround, double kadastrPrice, string status)
         {
-            Id = id;
             KadastrNumber = kadastrNumber;
             Addres = addres;
             Square = square;

@@ -8,7 +8,7 @@
         Title="MainWindow" Height="670" Width="1020">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.3*"/> 
+            <RowDefinition Height="0.3*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -259,7 +259,8 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="UserDataGrid">
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="UserDataGrid"
+                              SelectionChanged="UserDataGrid_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id Пользователя" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Логин" Binding="{Binding Name}"/>
@@ -274,7 +275,7 @@
                         <Label Content="Логин" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
                         <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="LoginTextBoxUser"/>
                         <Label Content="Пароль" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
-                        <PasswordBox Margin="5, -5, 5, 5" Height="20" x:Name="PasswordPasswordBoxUser"/>
+                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="PasswordPasswordBoxUser"/>
                         <Label Content="Статус" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
                         <CheckBox Margin="5, -5, 5, 5" Height="20" x:Name="StatusCheckBoxUser"/>
                         <Label Content="ДатаСоздания" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
@@ -421,8 +422,6 @@
                         <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="DiscribeTextBoxObremenenia"/>
                         <Label Content="Установленное лицо" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
                         <ComboBox Margin="5, -5, 5, 5" Height="20" x:Name="YstanovlFaceTextBoxObremenenia"/>
-                        <Label Content="Статус" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
-                        <ComboBox Margin="5, -5, 5, 5" Height="20" x:Name="StatusComboBoxObremenenia"/>
                         <Label Content="Право" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
                         <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="PravoTextBoxObremenenia"/>
                     </StackPanel>
@@ -560,13 +559,6 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id Правообладателя" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="ФИО" Binding="{Binding Name}"/>
-                            <DataGridTextColumn Header="ИНН" Binding="{Binding INN}"/>
-                            <DataGridTextColumn Header="ОГРН" Binding="{Binding ORGN}"/>
-                            <DataGridTextColumn Header="КПП" Binding="{Binding KPP}"/>
-                            <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}"/>
-                            <DataGridTextColumn Header="Электронная почта" Binding="{Binding Email}"/>
-                            <DataGridTextColumn Header="Адрес регистрации" Binding="{Binding Addres}"/>
-                            <DataGridTextColumn Header="Типы правообладателей" Binding="{Binding IdTypeOfPravoobladateli}"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
@@ -607,6 +599,54 @@
                                     x:Name="RefreshButton7" MouseLeftButtonDown="RefreshButtonGroundPlace_MouseLeftButtonDown">
                         <Image Source="/Images/free-icon-refresh-7037662.png"  Height="25" />
                         <Label Content="Обновить"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Получить обременение">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="407*"/>
+                        <RowDefinition Height="68*"/>
+                    </Grid.RowDefinitions>
+
+                    
+
+                    <StackPanel Grid.Row="0" Margin="5,5,5,67" Grid.RowSpan="2">
+                        <Label Content="Выберите необходимые данные для получения обременения" Margin="20,10,20,0" FontFamily="Georgia"
+       FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+       Background="#FF364A52" Foreground="White"/>
+                        <Label Content="Свободный участок" Margin="5,0,5,5" FontFamily="Georgia" FontWeight="Bold" FontSize="20" Foreground="#FF364A52"/>
+                        <ComboBox Margin="5, -5, 5, 5" Height="20" x:Name="FreeGroundPlaceComboBoxPoluchitObremenenie"/>
+                        <Label Content="Тип обременения" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold" FontSize="20" Foreground="#FF364A52"/>
+                        <ComboBox Margin="5, -5, 5, 5" Height="20" x:Name="TypeOfObremeneniaComboBoxPoluchitObremenenie"/>
+                        <Label Content="Вид права" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold" FontSize="20" Foreground="#FF364A52"/>
+                        <ComboBox Margin="5, -5, 5, 5" Height="20" x:Name="TypeRightComboBoxPoluchitObremenenie"/>
+                        <Label Content="Правообладатель" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold" FontSize="20" Foreground="#FF364A52"/>
+                        <ComboBox Margin="5, -5, 5, 5" Height="20" x:Name="PravoobladatelComboBoxPoluchitObremenenie"/>
+                        <Label Content="Установленное лицо" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold" FontSize="20" Foreground="#FF364A52"/>
+                        <ComboBox Margin="5, -5, 5, 5" Height="20" x:Name="YstanovlFaceComboBoxPoluchitObremenenie"/>
+                        <Label Content="Описание" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold" FontSize="20" Foreground="#FF364A52"/>
+                        <TextBox Margin="5,-5,5,5" Height="55" FontFamily="Georgia" x:Name="DiscribeTextBoxPoluchitObremenenie" 
+                                 FontWeight="Bold" FontSize="20" Foreground="#FF364A52" Background="#FFEDEDED" TextWrapping="Wrap"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="0,55,0,0">
+                        <StackPanel VerticalAlignment="Center" 
+                                    Margin="10,-50,10,10" Height="35" Orientation="Horizontal" Background="#FF83F9EB"
+                                    x:Name="OformitPravoButtonType" MouseLeftButtonDown="OformitPravoButtonType_MouseLeftButtonDown"  Width="200">
+                            <Image Source="/Images/free-icon-document-180327.png"  Height="25"/>
+                            <Label Content="Оформить право" FontSize="18" FontWeight="Bold" FontFamily="Georgia" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    Margin="10,-50,10,10" Height="35" Orientation="Horizontal" Background="#FFACF983"
+                                    x:Name="SformirovatObremenenieButton" MouseLeftButtonDown="SformirovatObremenenieButton_MouseLeftButtonDown"  Width="320" >
+                                <Image Source="/Images/free-icon-contract-5692221.png"  Height="25" />
+                                <Label Content="Сформировать обременение" FontSize="18" FontWeight="Bold" FontFamily="Georgia" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                            </StackPanel>
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
             </TabItem>

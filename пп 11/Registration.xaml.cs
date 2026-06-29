@@ -11,15 +11,18 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using пп_11.Data;
+using пп_11.Models;
 
 namespace пп_11
 {
     /// <summary>
     /// Логика взаимодействия для Registration.xaml
     /// </summary>
+
     public partial class Registration : Window
     {
-
+        private ContextDB db;
         private List<string> roles = new List<string>() {
             "Администратор",
             "Оператор"
@@ -28,13 +31,56 @@ namespace пп_11
         public Registration()
         {
             InitializeComponent();
+            db  = new ContextDB();
             RoleComboBox.ItemsSource = roles;
+            if (!db.Roles.Any())
+            {
+                db.Roles.Add(new Models.Role
+                {
+                    Name = "Администратор",
+                    Discribe = "Может все"
+                });
+                db.Roles.Add(new Models.Role
+                {
+                    Name = "Оператор",
+                    Discribe = "Может не все"
+                });
+                db.SaveChanges();
+            }
         }
 
         private void RegistrationButton_Click(object sender, RoutedEventArgs e)
         {
-            ErrorRegisterLabel.Content = "Ошибка!";
+
+            string error = "";
+            if (RegistrationTextBox.Text == "") error += "Заполните поле \"Логин\"\n";
+            if (RegistrationPasswordBox.Password == "") error += "Заполните поле \"Пароль\"\n";
+            if (BirchsdayDatePicker.Text == "") error += "Выберите Дату рождения\n";
+            if (RoleComboBox.Text == "") error += "Выберите Роль\n";
+            if (error != "")
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); return;
+            }
+            try
+            {
+                var user = db.Users.FirstOrDefault(x => x.Name == RegistrationTextBox.Text);
+                if (user != null)
+                {
+                    ErrorRegisterLabel.Content = "Пользователь с таким Логином уже существует"; return;
+                }
+
+                int idRole = db.Roles.First(r => r.Name == RoleComboBox.Text).Id;
+                User user1 = new User(RegistrationTextBox.Text, RegistrationPasswordBox.Password,true, DateTime.Parse(BirchsdayDatePicker.Text),idRole);
+
+                db.Users.Add(user1);
+                db.SaveChanges();
+                MessageBox.Show("Вы зарегистрировались!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                Login loginWindow = new Login();
+                loginWindow.Show(); this.Close();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
+        
 
         private void EnterInLofinLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

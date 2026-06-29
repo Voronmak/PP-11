@@ -30,7 +30,7 @@ namespace пп_11
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            ErrorLabel.Content = "Ошибка!";
+            Enter();
         }
 
         private void NoLoginRegisterLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -47,6 +47,28 @@ namespace пп_11
         private void NoRegisterLabel_MouseLeave(object sender, MouseEventArgs e)
         {
             LoginButton.Foreground = Brushes.White;
+        }
+
+        private void Enter()
+        {
+            var EnterUser = db.Users.FirstOrDefault(x => x.Name == LoginTextBox.Text);
+
+            if (EnterUser == null)
+            {
+                ErrorLabel.Content = "Пользователь не существует";
+                return;
+            }
+
+            if (EnterUser.Password == LoginPasswordBox.Password)
+            {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show(); this.Close();
+            }
+            else
+            {
+                ErrorLabel.Content = "Неверный пароль";
+                return;
+            }
         }
     }
 }

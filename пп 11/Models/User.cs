@@ -24,9 +24,8 @@ namespace пп_11.Models
         [ForeignKey(nameof(IdRole))]
         public Role? Role { get; set; }
 
-        public User(int id, string name, string password, bool status, DateTime dateCreate, int idRole)
+        public User(string name, string password, bool status, DateTime dateCreate, int idRole)
         {
-            Id = id;
             Name = name;
             Password = password;
             Status = status;

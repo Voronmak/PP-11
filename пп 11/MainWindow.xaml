@@ -192,11 +192,12 @@
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="278*"/>
+                        <ColumnDefinition Width="229*"/>
+                        <ColumnDefinition Width="507*"/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="RoleDataGrid">
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="RoleDataGrid" Grid.ColumnSpan="2">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id Роли" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Наименование" Binding="{Binding Name}"/>
@@ -204,14 +205,14 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
+                    <StackPanel Grid.Row="0" Grid.Column="2" Margin="5,5,5,5">
                         <Label Content="Наименование" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
                         <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="NameTextBoxRole"/>
                         <Label Content="Краткое описание" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
                         <TextBox Margin="5, -5, 5, 5" Height="25" x:Name="DiscribeTextBoxRole"/>
                     </StackPanel>
 
-                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
                         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" 
                                     Margin="10,5,5,5" Height="25" Orientation="Horizontal" Background="#FF83F9AA"
                                     x:Name="AddButtonRole" MouseLeftButtonDown="AddButtonRole_MouseLeftButtonDown">
@@ -239,7 +240,7 @@
                     </StackPanel>
 
                     <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"
-                                    Margin="5" Height="25" Orientation="Horizontal" Background="#FF9C83F9"
+                                    Margin="5,0,0,0" Height="25" Orientation="Horizontal" Background="#FF9C83F9"
                                     x:Name="RefreshButton2" MouseLeftButtonDown="RefreshButtonGroundPlace_MouseLeftButtonDown">
                         <Image Source="/Images/free-icon-refresh-7037662.png"  Height="25" />
                         <Label Content="Обновить"/>
@@ -264,7 +265,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id Пользователя" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Логин" Binding="{Binding Name}"/>
-                            <DataGridTextColumn Header="Пароль" Binding="{Binding Discribe }"/>
+                            <DataGridTextColumn Header="Пароль" Binding="{Binding Password }"/>
                             <DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
                             <DataGridTextColumn Header="ДатаСоздания" Binding="{Binding DataCreate}"/>
                             <DataGridTextColumn Header="Id Роли" Binding="{Binding IdRole }"/>
@@ -551,23 +552,24 @@
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="12*"/>
+                        <ColumnDefinition Width="157*"/>
+                        <ColumnDefinition Width="169*"/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="TypeOfPravoobladateliDataGrid">
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="TypeOfPravoobladateliDataGrid" Grid.ColumnSpan="2">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id Правообладателя" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="ФИО" Binding="{Binding Name}"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
+                    <StackPanel Grid.Row="0" Grid.Column="2" Margin="5,5,5,5">
                         <Label Content="Наименование типа" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
                         <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="NameTextBoxTypeOfPravoobladateli"/>
                     </StackPanel>
 
-                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
                         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" 
                                     Margin="10,5,5,5" Height="25" Orientation="Horizontal" Background="#FF83F9AA"
                                     x:Name="AddButtonTypeOfPravoobladateli" MouseLeftButtonDown="AddButtonTypeOfPravoobladateli_MouseLeftButtonDown">
@@ -595,8 +597,8 @@
                     </StackPanel>
 
                     <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"
-                                    Margin="5" Height="25" Orientation="Horizontal" Background="#FF9C83F9"
-                                    x:Name="RefreshButton7" MouseLeftButtonDown="RefreshButtonGroundPlace_MouseLeftButtonDown">
+                                    Margin="5,0,0,0" Height="25" Orientation="Horizontal" Background="#FF9C83F9"
+                                    x:Name="RefreshButton7" MouseLeftButtonDown="RefreshButtonGroundPlace_MouseLeftButtonDown" Grid.ColumnSpan="2">
                         <Image Source="/Images/free-icon-refresh-7037662.png"  Height="25" />
                         <Label Content="Обновить"/>
                     </StackPanel>
@@ -610,7 +612,7 @@
                         <RowDefinition Height="68*"/>
                     </Grid.RowDefinitions>
 
-                    
+
 
                     <StackPanel Grid.Row="0" Margin="5,5,5,67" Grid.RowSpan="2">
                         <Label Content="Выберите необходимые данные для получения обременения" Margin="20,10,20,0" FontFamily="Georgia"

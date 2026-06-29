@@ -1,6 +1,4 @@
-﻿using IronWord;
-using IronWord.Models;
-using Microsoft.Win32;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -13,6 +11,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Grpc.Core;
+using IronWord;
+using IronWord.Models;
+using Microsoft.Win32;
 using пп_11.Data;
 using пп_11.Enums;
 using пп_11.Models;
@@ -43,7 +45,13 @@ namespace пп_11
         private void LoadDataGrids()
         {
             UserDataGrid.ItemsSource = db.Users.ToList();
-
+            TypeOfRightDataGrid.ItemsSource = db.TypeOfRight.ToList();
+            TypeOfPravoobladateliDataGrid.ItemsSource = db.TypeOfPravoobladatelis.ToList();
+            RoleDataGrid.ItemsSource = db.Roles.ToList();
+            RightDataGrid.ItemsSource = db.Rights.ToList();
+            PravoobladateliDataGrid.ItemsSource = db.Pravoobladatelis.ToList();
+            ObremeneneiaDataGrid.ItemsSource = db.Obremenenia.ToList();
+            GroundPlaceDataGrid.ItemsSource = db.GroundPlaces.ToList();
         }
 
         private void LoadComboBoxes()
@@ -69,28 +77,91 @@ namespace пп_11
         private void AddButtonGroundPlace_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             string error = "";
+            if (string.IsNullOrEmpty(KadastrNumberTextBoxGroundPlace.Text))
+            {
+                error += "Введите кадастровый номер земельного участка\n";
+            }
+            if (string.IsNullOrEmpty(AddresTextBoxGroundPlace.Text))
+            {
+                error += "Введите адрес земельного участка\n";
+            }
+            if (string.IsNullOrEmpty(SquareTextBoxGroundPlace.Text))
+            {
+                error += "Введите площадь земельного участка\n";
+            }
+            if (string.IsNullOrEmpty(TypeOfGroundTextBoxGroundPlace.Text))
+            {
+                error += "Введите категорию земли земельного участка\n";
+            }
+            if (string.IsNullOrEmpty(KadastrPriceTextBoxGroundPlace.Text))
+            {
+                error += "Введите кадастровую стоимость земельного участка\n";
+            }
+            if (string.IsNullOrEmpty(StatusTextBoxGroundPlace.Text))
+            {
+                error += "Введите статус земельного участка\n";
+            }
 
+            if (error != "")
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             try
             {
+                var groundPlace = new GroundPlace
+                {
 
-                //GroundPlace groundPlace = new GroundPlace(KadastrNumberTextBoxGroundPlace.Text,);
+                    KadastrNumber = Convert.ToInt32(KadastrNumberTextBoxGroundPlace),
+                    Addres = AddresTextBoxGroundPlace.Text,
+                    Square = Convert.ToDouble(SquareTextBoxGroundPlace),
+                    TypeOfGround = TypeOfGroundTextBoxGroundPlace.Text,
+                    KadastrPrice = Convert.ToDouble(KadastrPriceTextBoxGroundPlace),
+                    Status = StatusTextBoxGroundPlace.Text
 
-                //db.GroundPlaces.Add(groundPlace);
+                };
+
+                db.GroundPlaces.Add(groundPlace);
                 db.SaveChanges();
 
                 LoadAllData();
-
-                MessageBox.Show("Водитель добавлен", "Успех", MessageBoxButton.OK,
+                MessageBox.Show("Земельный участок добавлен", "Успех", MessageBoxButton.OK,
                     MessageBoxImage.Information);
             }
+
             catch (Exception ex)
             { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
 
         private void DeleteButtonGroundPlace_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (GroundPlaceDataGrid.SelectedItem is not GroundPlace selected)
+            {
+                MessageBox.Show("Выберите земельный участок для удаления", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            var result = MessageBox.Show($"Удалить земельный участок '{selected.KadastrNumber}'?\n", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    db.GroundPlaces.Remove(selected);
+                    db.SaveChanges();
+
+                    LoadAllData();
+
+
+                    MessageBox.Show("Земельный участок удален", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+                catch (Exception ex)
+                { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
+
+            }
         }
 
         private void ChangeButtonGroundPlace_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -102,12 +173,93 @@ namespace пп_11
         #region right
         private void AddButtonRight_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            string error = "";
+            if (string.IsNullOrEmpty(NumberOfRegistrationTextBoxRights.Text))
+            {
+                error += "Введите номер регистрации права\n";
+            }
+            if (string.IsNullOrEmpty(DateOfRegistrationTextBoxRights.Text))
+            {
+                error += "Введите дату регистрации права\n";
+            }
+            if (string.IsNullOrEmpty(DocumentOsnovanieTextBoxRights.Text))
+            {
+                error += "Введите документ основание права\n";
+            }
+            if (string.IsNullOrEmpty(IdGroundPlaceTextBoxRights.Text))
+            {
+                error += "Введите Id земельного участка\n";
+            }
+            if (string.IsNullOrEmpty(IdPravoobladateliTextBoxRights.Text))
+            {
+                error += "Введите Id правообладателя\n";
+            }
+            if (string.IsNullOrEmpty(IdTypeOfRightTextBoxRights.Text))
+            {
+                error += "Введите Id вида\n";
+            }
 
+            if (error != "")
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                var right = new Right
+                {
+
+                    NumberOfRegistration = Convert.ToInt32(NumberOfRegistrationTextBoxRights.Text),
+                    DateOfRegistration = Convert.ToDateTime(DateOfRegistrationTextBoxRights.Text),
+                    DocumentOsnovanie = DocumentOsnovanieTextBoxRights.Text,
+                    StatusOfRight = Convert.ToBoolean(StatusOfRightTextBoxRights),
+                    IdGroundPlace = Convert.ToInt32(IdGroundPlaceTextBoxRights.Text),
+                    IdPravoobladateli = Convert.ToInt32(IdPravoobladateliTextBoxRights.Text),
+                    IdTypeOfRight = Convert.ToInt32(IdTypeOfRightTextBoxRights)
+
+                };
+
+                db.Rights.Add(right);
+                db.SaveChanges();
+
+                LoadAllData();
+                MessageBox.Show("Право добавлено", "Успех", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+
+            catch (Exception ex)
+            { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
 
         private void DeleteButtonRight_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (RightDataGrid.SelectedItem is not Right selected)
+            {
+                MessageBox.Show("Выберите право для удаления", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            var result = MessageBox.Show($"Удалить право '{selected.NumberOfRegistration}'?\n", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    db.Rights.Remove(selected);
+                    db.SaveChanges();
+
+                    LoadAllData();
+
+
+                    MessageBox.Show("Право удалено", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+                catch (Exception ex)
+                { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
+
+            }
         }
 
         private void EditButtonRight_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -126,12 +278,68 @@ namespace пп_11
         #region role
         private void AddButtonRole_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            string error = "";
+            if (string.IsNullOrEmpty(NameTextBoxRole.Text))
+            {
+                error += "Введите наименование роли\n";
+            }
 
+            if (error != "")
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                var role = new Role
+                {
+
+                    Name = NameTextBoxRole.Text,
+                    Discribe = DiscribeTextBoxRole.Text
+
+                };
+
+                db.Roles.Add(role);
+                db.SaveChanges();
+
+                LoadAllData();
+                MessageBox.Show("Роль добавлена", "Успех", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+
+            catch (Exception ex)
+            { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
 
         private void DeleteButtonRole_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (RoleDataGrid.SelectedItem is not Role selected)
+            {
+                MessageBox.Show("Выберите роль для удаления", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            var result = MessageBox.Show($"Удалить роль '{selected.Name}'?\n", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    db.Roles.Remove(selected);
+                    db.SaveChanges();
+
+                    LoadAllData();
+
+
+                    MessageBox.Show("Роль удалена", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+                catch (Exception ex)
+                { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
+
+            }
         }
 
         private void EditButtonRole_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -143,12 +351,82 @@ namespace пп_11
         #region user
         private void AddButtonUser_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            string error = "";
+            if (string.IsNullOrEmpty(LoginTextBoxUser.Text))
+            {
+                error += "Введите логинn";
+            }
+            if (string.IsNullOrEmpty(PasswordPasswordBoxUser.Text))
+            {
+                error += "Введите пароль\n";
+            }
+            if (string.IsNullOrEmpty(DataCreateTextBoxUser.Text))
+            {
+                error += "Введите дату создания\n";
+            }
+            if (string.IsNullOrEmpty(IdRoleTextBoxUser.Text))
+            {
+                error += "Введите Id роли\n";
+            }
 
+            if (error != "")
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                var user = new User
+                {
+
+                    Name = NameTextBoxRole.Text,
+                    Password = DiscribeTextBoxRole.Text,
+                    Status = Convert.ToBoolean(StatusCheckBoxUser),
+                    DateCreate = Convert.ToDateTime(DataCreateTextBoxUser),
+                    IdRole = Convert.ToInt32(IdRoleTextBoxUser)
+                };
+
+                db.Users.Add(user);
+                db.SaveChanges();
+
+                LoadAllData();
+                MessageBox.Show("Пользователь добавлен", "Успех", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+
+            catch (Exception ex)
+            { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
 
         private void DeleteButtonUser_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (UserDataGrid.SelectedItem is not User selected)
+            {
+                MessageBox.Show("Выберите пользователя для удаления", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            var result = MessageBox.Show($"Удалить пользователя '{selected.Name}'?\n", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    db.Users.Remove(selected);
+                    db.SaveChanges();
+
+                    LoadAllData();
+
+
+                    MessageBox.Show("Пользователь удален", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+                catch (Exception ex)
+                { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
+
+            }
         }
 
         private void EditButtonUser_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -165,7 +443,32 @@ namespace пп_11
 
         private void DeleteButtonTypeOfRight_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (TypeOfRightDataGrid.SelectedItem is not TypeOfRight selected)
+            {
+                MessageBox.Show("Выберите вид права для удаления", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            var result = MessageBox.Show($"Удалить вид права '{selected.Name}'?\n", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    db.TypeOfRight.Remove(selected);
+                    db.SaveChanges();
+
+                    LoadAllData();
+
+
+                    MessageBox.Show("Вид права удален", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+                catch (Exception ex)
+                { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
+
+            }
         }
 
         private void AddButtonTypeOfRight_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -182,7 +485,32 @@ namespace пп_11
 
         private void DeleteButtonObremenenia_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (ObremeneneiaDataGrid.SelectedItem is not Obremenenia selected)
+            {
+                MessageBox.Show("Выберите обременение для удаления", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            var result = MessageBox.Show($"Удалить обременение '{selected.TypeOfObremenenia}'?\n", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    db.Obremenenia.Remove(selected);
+                    db.SaveChanges();
+
+                    LoadAllData();
+
+
+                    MessageBox.Show("Обременение удалено", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+                catch (Exception ex)
+                { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
+
+            }
         }
 
         private void AddButtonObremenenia_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -199,7 +527,32 @@ namespace пп_11
 
         private void DeleteButtonPravoobladateli_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (PravoobladateliDataGrid.SelectedItem is not Pravoobladateli selected)
+            {
+                MessageBox.Show("Выберите правообладателя для удаления", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            var result = MessageBox.Show($"Удалить правообладателя '{selected.Name}'?\n", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    db.Pravoobladatelis.Remove(selected);
+                    db.SaveChanges();
+
+                    LoadAllData();
+
+
+                    MessageBox.Show("Правообладатель удален", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+                catch (Exception ex)
+                { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
+
+            }
         }
 
         private void AddButtonPravoobladateli_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -216,7 +569,32 @@ namespace пп_11
 
         private void DeleteButtonTypeOfPravoobladateli_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (TypeOfPravoobladateliDataGrid.SelectedItem is not TypeOfPravoobladateli selected)
+            {
+                MessageBox.Show("Выберите тип правообладателя для удаления", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            var result = MessageBox.Show($"Удалить тип правообладателя '{selected.Name}'?\n", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    db.TypeOfPravoobladatelis.Remove(selected);
+                    db.SaveChanges();
+
+                    LoadAllData();
+
+
+                    MessageBox.Show("Тип правообладателя удален", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+                catch (Exception ex)
+                { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
+
+            }
         }
 
         private void AddButtonTypeOfPravoobladateli_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

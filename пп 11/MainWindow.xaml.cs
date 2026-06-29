@@ -57,7 +57,7 @@ namespace пп_11
         private void LoadComboBoxes()
         {
             TypeOfGroundTextBoxGroundPlace.ItemsSource = Enum.GetValues(typeof(TypeOfGround));
-            StatusTextBoxGroundPlace.ItemsSource = Enum.GetValues(typeof(Status));
+            StatusTextBoxGroundPlace.ItemsSource = Enum.GetValues(typeof(Enums.Status));
             TypeOfObremeneniaComboBoxObremenenia.ItemsSource = Enum.GetValues(typeof(TypeOfObremenenia));
             YstanovlFaceTextBoxObremenenia.ItemsSource = Enum.GetValues(typeof(YstanovlFace));
 

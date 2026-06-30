@@ -28,7 +28,7 @@ namespace пп_11.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-O44JPRI\SQLEXPRESS;Database=PP1;Trusted_Connection=True;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-O44JPRI\SQLEXPRESS;Database=PP2;Trusted_Connection=True;TrustServerCertificate=True;");
         }
     }
 }

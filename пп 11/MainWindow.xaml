@@ -29,7 +29,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="GroundPlaceDataGrid">
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="GroundPlaceDataGrid" SelectionChanged="GroundPlaceDataGrid_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id Земельного участка" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Кадастровый номер" Binding="{Binding KadastrNumber}"/>
@@ -118,7 +118,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="RightDataGrid">
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="RightDataGrid" SelectionChanged="RightDataGrid_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id Права" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Номер регистрации" Binding="{Binding NumberOfRegistration}"/>
@@ -197,7 +197,7 @@
                         <ColumnDefinition Width="507*"/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="RoleDataGrid" Grid.ColumnSpan="2">
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="RoleDataGrid" SelectionChanged="RoleDataGrid_SelectionChanged" Grid.ColumnSpan="2">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id Роли" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Наименование" Binding="{Binding Name}"/>
@@ -333,12 +333,12 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="TypeOfRightDataGrid">
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="TypeOfRightDataGrid" SelectionChanged="TypeOfRightDataGrid_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id Вида Права" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Наименование" Binding="{Binding Name}"/>
                             <DataGridTextColumn Header="Кодовое обозначение" Binding="{Binding CodeName}"/>
-                            <DataGridTextColumn Header="Описание" Binding="{Binding Discribe}"/>
+                            <DataGridTextColumn Header="Описание" Binding="{Binding Dicribe}"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
@@ -399,7 +399,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="ObremeneneiaDataGrid">
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="ObremeneneiaDataGrid" SelectionChanged="ObremeneneiaDataGrid_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id Обременения" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="Тип обременения" Binding="{Binding TypeOfObremenenia}"/>
@@ -407,7 +407,6 @@
                             <DataGridTextColumn Header="Дата регистрации" Binding="{Binding DataOfRegistration}"/>
                             <DataGridTextColumn Header="Описание" Binding="{Binding Discribe}"/>
                             <DataGridTextColumn Header="Установленное лицо" Binding="{Binding YstanovlFace}"/>
-                            <DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
                             <DataGridTextColumn Header="Право" Binding="{Binding IdRight}"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -471,11 +470,12 @@
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0*"/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="PravoobladateliDataGrid">
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="PravoobladateliDataGrid" SelectionChanged="PravoobladateliDataGrid_SelectionChanged"  Grid.ColumnSpan="2">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id Правообладателя" Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="ФИО" Binding="{Binding Name}"/>
@@ -489,7 +489,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
+                    <StackPanel Grid.Row="0" Grid.Column="2" Margin="5,5,5,5">
                         <Label Content="ФИО" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
                         <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="NameTextBoxPravoobladateli"/>
                         <Label Content="ИНН" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
@@ -508,7 +508,7 @@
                         <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="IdTypeOfPravoobladateliTextBoxPravoobladateli"/>
                     </StackPanel>
 
-                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
                         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" 
                                     Margin="10,5,5,5" Height="25" Orientation="Horizontal" Background="#FF83F9AA"
                                     x:Name="AddButtonPravoobladateli" MouseLeftButtonDown="AddButtonPravoobladateli_MouseLeftButtonDown">
@@ -536,8 +536,8 @@
                     </StackPanel>
 
                     <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"
-                                    Margin="5" Height="25" Orientation="Horizontal" Background="#FF9C83F9"
-                                    x:Name="RefreshButton6" MouseLeftButtonDown="RefreshButtonGroundPlace_MouseLeftButtonDown">
+                                    Margin="5,0,0,0" Height="25" Orientation="Horizontal" Background="#FF9C83F9"
+                                    x:Name="RefreshButton6" MouseLeftButtonDown="RefreshButtonGroundPlace_MouseLeftButtonDown" Grid.ColumnSpan="2" Width="89">
                         <Image Source="/Images/free-icon-refresh-7037662.png"  Height="25" />
                         <Label Content="Обновить"/>
                     </StackPanel>
@@ -557,10 +557,10 @@
                         <ColumnDefinition Width="169*"/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="TypeOfPravoobladateliDataGrid" Grid.ColumnSpan="2">
+                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="TypeOfPravoobladateliDataGrid" SelectionChanged="TypeOfPravoobladateliDataGrid_SelectionChanged"  Grid.ColumnSpan="2">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Id Правообладателя" Binding="{Binding Id}"/>
-                            <DataGridTextColumn Header="ФИО" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="Наименование" Binding="{Binding Name}"/>
                         </DataGrid.Columns>
                     </DataGrid>
 

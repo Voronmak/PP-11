@@ -113,11 +113,11 @@ namespace пп_11
                 var groundPlace = new GroundPlace
                 {
 
-                    KadastrNumber = Convert.ToInt32(KadastrNumberTextBoxGroundPlace),
+                    KadastrNumber = Convert.ToInt32(KadastrNumberTextBoxGroundPlace.Text),
                     Addres = AddresTextBoxGroundPlace.Text,
-                    Square = Convert.ToDouble(SquareTextBoxGroundPlace),
+                    Square = Convert.ToDouble(SquareTextBoxGroundPlace.Text),
                     TypeOfGround = TypeOfGroundTextBoxGroundPlace.Text,
-                    KadastrPrice = Convert.ToDouble(KadastrPriceTextBoxGroundPlace),
+                    KadastrPrice = Convert.ToDouble(KadastrPriceTextBoxGroundPlace.Text),
                     Status = StatusTextBoxGroundPlace.Text
 
                 };
@@ -166,7 +166,69 @@ namespace пп_11
 
         private void ChangeButtonGroundPlace_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            //int KadastrNumber = Convert.ToInt32(KadastrNumberTextBoxGroundPlace.Text);
+            if (GroundPlaceDataGrid.SelectedItem is not GroundPlace selected)
+            {
+                MessageBox.Show("Выберите земельный участок для редактирования", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            string error = "";
+            if (string.IsNullOrEmpty(KadastrNumberTextBoxGroundPlace.Text))
+            {
+                error += "Введите кадастровый номер земельного участка\n";
+            }
+            if (string.IsNullOrEmpty(AddresTextBoxGroundPlace.Text))
+            {
+                error += "Введите адрес земельного участка\n";
+            }
+            if (string.IsNullOrEmpty(SquareTextBoxGroundPlace.Text))
+            {
+                error += "Введите площадь земельного участка\n";
+            }
+            if (string.IsNullOrEmpty(TypeOfGroundTextBoxGroundPlace.Text))
+            {
+                error += "Введите категорию земли земельного участка\n";
+            }
+            if (string.IsNullOrEmpty(KadastrPriceTextBoxGroundPlace.Text))
+            {
+                error += "Введите кадастровую стоимость земельного участка\n";
+            }
+            if (string.IsNullOrEmpty(StatusTextBoxGroundPlace.Text))
+            {
+                error += "Введите статус земельного участка\n";
+            }
+
+            if (error != "")
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                var groundPlace = new GroundPlace
+                {
+
+                    KadastrNumber = Convert.ToInt32(KadastrNumberTextBoxGroundPlace.Text),
+                    Addres = AddresTextBoxGroundPlace.Text,
+                    Square = Convert.ToDouble(SquareTextBoxGroundPlace.Text),
+                    TypeOfGround = TypeOfGroundTextBoxGroundPlace.Text,
+                    KadastrPrice = Convert.ToDouble(KadastrPriceTextBoxGroundPlace.Text),
+                    Status = StatusTextBoxGroundPlace.Text
+
+                };
+
+                db.GroundPlaces.Add(groundPlace);
+                db.SaveChanges();
+
+                LoadAllData();
+                MessageBox.Show("Земельный участок изменен", "Успех", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+
+            catch (Exception ex)
+            { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
         #endregion
 
@@ -216,7 +278,7 @@ namespace пп_11
                     StatusOfRight = Convert.ToBoolean(StatusOfRightTextBoxRights),
                     IdGroundPlace = Convert.ToInt32(IdGroundPlaceTextBoxRights.Text),
                     IdPravoobladateli = Convert.ToInt32(IdPravoobladateliTextBoxRights.Text),
-                    IdTypeOfRight = Convert.ToInt32(IdTypeOfRightTextBoxRights)
+                    IdTypeOfRight = Convert.ToInt32(IdTypeOfRightTextBoxRights.Text)
 
                 };
 
@@ -264,7 +326,70 @@ namespace пп_11
 
         private void EditButtonRight_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            //int NumberOfRegistration = Convert.ToInt32(NumberOfRegistrationTextBoxRights.Text)  ;
+            if (RightDataGrid.SelectedItem is not Right selected)
+            {
+                MessageBox.Show("Выберите право для редактирования", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            string error = "";
+            if (string.IsNullOrEmpty(NumberOfRegistrationTextBoxRights.Text))
+            {
+                error += "Введите номер регистрации права\n";
+            }
+            if (string.IsNullOrEmpty(DateOfRegistrationTextBoxRights.Text))
+            {
+                error += "Введите дату регистрации права\n";
+            }
+            if (string.IsNullOrEmpty(DocumentOsnovanieTextBoxRights.Text))
+            {
+                error += "Введите документ основание права\n";
+            }
+            if (string.IsNullOrEmpty(IdGroundPlaceTextBoxRights.Text))
+            {
+                error += "Введите Id земельного участка\n";
+            }
+            if (string.IsNullOrEmpty(IdPravoobladateliTextBoxRights.Text))
+            {
+                error += "Введите Id правообладателя\n";
+            }
+            if (string.IsNullOrEmpty(IdTypeOfRightTextBoxRights.Text))
+            {
+                error += "Введите Id вида\n";
+            }
+
+            if (error != "")
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                var right = new Right
+                {
+
+                    NumberOfRegistration = Convert.ToInt32(NumberOfRegistrationTextBoxRights.Text),
+                    DateOfRegistration = Convert.ToDateTime(DateOfRegistrationTextBoxRights.Text),
+                    DocumentOsnovanie = DocumentOsnovanieTextBoxRights.Text,
+                    StatusOfRight = Convert.ToBoolean(StatusOfRightTextBoxRights),
+                    IdGroundPlace = Convert.ToInt32(IdGroundPlaceTextBoxRights.Text),
+                    IdPravoobladateli = Convert.ToInt32(IdPravoobladateliTextBoxRights.Text),
+                    IdTypeOfRight = Convert.ToInt32(IdTypeOfRightTextBoxRights.Text)
+
+                };
+
+                db.Rights.Add(right);
+                db.SaveChanges();
+
+                LoadAllData();
+                MessageBox.Show("Право изменено", "Успех", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+
+            catch (Exception ex)
+            { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
         #endregion
 
@@ -344,8 +469,47 @@ namespace пп_11
 
         private void EditButtonRole_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            Name = NameTextBoxRole.Text;
+            if (RoleDataGrid.SelectedItem is not Role selected)
+            {
+                MessageBox.Show("Выберите роль для редактирования", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            string error = "";
+            if (string.IsNullOrEmpty(NameTextBoxRole.Text))
+            {
+                error += "Введите наименование роли\n";
+            }
+
+            if (error != "")
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                var role = new Role
+                {
+
+                    Name = NameTextBoxRole.Text,
+                    Discribe = DiscribeTextBoxRole.Text
+
+                };
+
+                db.Roles.Add(role);
+                db.SaveChanges();
+
+                LoadAllData();
+                MessageBox.Show("Роль изменена", "Успех", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+
+            catch (Exception ex)
+            { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
+        
         #endregion
 
         #region user
@@ -354,7 +518,7 @@ namespace пп_11
             string error = "";
             if (string.IsNullOrEmpty(LoginTextBoxUser.Text))
             {
-                error += "Введите логинn";
+                error += "Введите логин\n";
             }
             if (string.IsNullOrEmpty(PasswordPasswordBoxUser.Text))
             {
@@ -383,8 +547,8 @@ namespace пп_11
                     Name = NameTextBoxRole.Text,
                     Password = DiscribeTextBoxRole.Text,
                     Status = Convert.ToBoolean(StatusCheckBoxUser),
-                    DateCreate = Convert.ToDateTime(DataCreateTextBoxUser),
-                    IdRole = Convert.ToInt32(IdRoleTextBoxUser)
+                    DateCreate = Convert.ToDateTime(DataCreateTextBoxUser.Text),
+                    IdRole = Convert.ToInt32(IdRoleTextBoxUser.Text)
                 };
 
                 db.Users.Add(user);
@@ -431,14 +595,109 @@ namespace пп_11
 
         private void EditButtonUser_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            Name = LoginTextBoxUser.Text;
+            if (UserDataGrid.SelectedItem is not User selected)
+            {
+                MessageBox.Show("Выберите пользователя для редактирования", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            string error = "";
+            if (string.IsNullOrEmpty(LoginTextBoxUser.Text))
+            {
+                error += "Введите логин\n";
+            }
+            if (string.IsNullOrEmpty(PasswordPasswordBoxUser.Text))
+            {
+                error += "Введите пароль\n";
+            }
+            if (string.IsNullOrEmpty(DataCreateTextBoxUser.Text))
+            {
+                error += "Введите дату создания\n";
+            }
+            if (string.IsNullOrEmpty(IdRoleTextBoxUser.Text))
+            {
+                error += "Введите Id роли\n";
+            }
+
+            if (error != "")
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                var user = new User
+                {
+
+                    Name = NameTextBoxRole.Text,
+                    Password = DiscribeTextBoxRole.Text,
+                    Status = Convert.ToBoolean(StatusCheckBoxUser),
+                    DateCreate = Convert.ToDateTime(DataCreateTextBoxUser.Text),
+                    IdRole = Convert.ToInt32(IdRoleTextBoxUser.Text)
+                };
+
+                db.Users.Add(user);
+                db.SaveChanges();
+
+                LoadAllData();
+                MessageBox.Show("Пользователь изменен", "Успех", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+
+            catch (Exception ex)
+            { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
         #endregion
 
         #region typeofright
         private void EditButtonTypeOfRight_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            Name = NameTextBoxTypeOfRight.Text;
+            if (TypeOfRightDataGrid.SelectedItem is not TypeOfRight selected)
+            {
+                MessageBox.Show("Выберите вид права для редактирования", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            string error = "";
+            if (string.IsNullOrEmpty(NameTextBoxTypeOfRight.Text))
+            {
+                error += "Введите наименование вида права\n";
+            }
+            if (string.IsNullOrEmpty(CodeNameTextBoxTypeOfRight.Text))
+            {
+                error += "Введите кодовое обозначение вида\n";
+            }
+
+            if (error != "")
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                var typeOfRights = new TypeOfRight
+                {
+
+                    Name = NameTextBoxRole.Text,
+                    CodeName = Convert.ToInt32(CodeNameTextBoxTypeOfRight.Text),
+                    Dicribe = DiscribeTextBoxRole.Text
+
+                };
+
+                db.TypeOfRight.Add(typeOfRights);
+                db.SaveChanges();
+
+                LoadAllData();
+                MessageBox.Show("Вид права изменен", "Успех", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+
+            catch (Exception ex)
+            { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
 
         private void DeleteButtonTypeOfRight_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -473,14 +732,108 @@ namespace пп_11
 
         private void AddButtonTypeOfRight_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            string error = "";
+            if (string.IsNullOrEmpty(NameTextBoxTypeOfRight.Text))
+            {
+                error += "Введите наименование вида права\n";
+            }
+            if (string.IsNullOrEmpty(CodeNameTextBoxTypeOfRight.Text))
+            {
+                error += "Введите кодовое обозначение вида\n";
+            }
 
+            if (error != "")
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                var typeOfRights = new TypeOfRight
+                {
+
+                    Name = NameTextBoxRole.Text,
+                    CodeName = Convert.ToInt32(CodeNameTextBoxTypeOfRight.Text),
+                    Dicribe = DiscribeTextBoxRole.Text
+
+                };
+
+                db.TypeOfRight.Add(typeOfRights);
+                db.SaveChanges();
+
+                LoadAllData();
+                MessageBox.Show("Вид права добавлен", "Успех", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+
+            catch (Exception ex)
+            { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
         #endregion
 
         #region obremenenia
         private void EditButtonObremenenia_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            //int NumberOfRegistration = Convert.ToInt32(NumberOfRegistrationBoxObremenenia.Text);
+            if (ObremeneneiaDataGrid.SelectedItem is not Obremenenia selected)
+            {
+                MessageBox.Show("Выберите обременение для редактирования", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            string error = "";
+            if (string.IsNullOrEmpty(TypeOfObremeneniaComboBoxObremenenia.Text))
+            {
+                error += "Введите тип обременения\n";
+            }
+            if (string.IsNullOrEmpty(NumberOfRegistrationBoxObremenenia.Text))
+            {
+                error += "Введите номер обременения\n";
+            }
+            if (string.IsNullOrEmpty(DataOfRegistrationDatePickerObremenenia.Text))
+            {
+                error += "Введите дату обременения\n";
+            }
+            if (string.IsNullOrEmpty(YstanovlFaceTextBoxObremenenia.Text))
+            {
+                error += "Введите установленное лицо обременения\n";
+            }
+            if (string.IsNullOrEmpty(PravoTextBoxObremenenia.Text))
+            {
+                error += "Введите право обременения\n";
+            }
+
+
+            if (error != "")
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                var obremenenia = new Obremenenia
+                {
+
+                    TypeOfObremenenia = TypeOfObremeneniaComboBoxObremenenia.Text,
+                    NumberOfRegistration = Convert.ToInt32(NumberOfRegistrationBoxObremenenia.Text),
+                    DataOfRegistration = Convert.ToDateTime(DataOfRegistrationDatePickerObremenenia.Text),
+                    YstanovlFace = YstanovlFaceTextBoxObremenenia.Text,
+                    Discribe = DiscribeTextBoxObremenenia.Text,
+                    IdRight = Convert.ToInt32(PravoTextBoxObremenenia.Text)
+                };
+
+                db.Obremenenia.Add(obremenenia);
+                db.SaveChanges();
+
+                LoadAllData();
+                MessageBox.Show("Обременение изменено", "Успех", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+
+            catch (Exception ex)
+            { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
 
         private void DeleteButtonObremenenia_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -515,14 +868,138 @@ namespace пп_11
 
         private void AddButtonObremenenia_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            string error = "";
+            if (string.IsNullOrEmpty(TypeOfObremeneniaComboBoxObremenenia.Text))
+            {
+                error += "Введите тип обременения\n";
+            }
+            if (string.IsNullOrEmpty(NumberOfRegistrationBoxObremenenia.Text))
+            {
+                error += "Введите номер обременения\n";
+            }
+            if (string.IsNullOrEmpty(DataOfRegistrationDatePickerObremenenia.Text))
+            {
+                error += "Введите дату обременения\n";
+            }
+            if (string.IsNullOrEmpty(YstanovlFaceTextBoxObremenenia.Text))
+            {
+                error += "Введите установленное лицо обременения\n";
+            }
+            if (string.IsNullOrEmpty(PravoTextBoxObremenenia.Text))
+            {
+                error += "Введите право обременения\n";
+            }
 
+
+            if (error != "")
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                var obremenenia = new Obremenenia
+                {
+
+                    TypeOfObremenenia = TypeOfObremeneniaComboBoxObremenenia.Text,
+                    NumberOfRegistration = Convert.ToInt32(NumberOfRegistrationBoxObremenenia.Text),
+                    DataOfRegistration = Convert.ToDateTime(DataOfRegistrationDatePickerObremenenia.Text),
+                    YstanovlFace = YstanovlFaceTextBoxObremenenia.Text,
+                    Discribe = DiscribeTextBoxObremenenia.Text,
+                    IdRight = Convert.ToInt32(PravoTextBoxObremenenia.Text)
+                };
+
+                db.Obremenenia.Add(obremenenia);
+                db.SaveChanges();
+
+                LoadAllData();
+                MessageBox.Show("Обременение добавлено", "Успех", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+
+            catch (Exception ex)
+            { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
+        
         #endregion
 
         #region pravoobladateli
         private void EditButtonPravoobladateli_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            Name = NameTextBoxPravoobladateli.Text;
+            if (PravoobladateliDataGrid.SelectedItem is not Pravoobladateli selected)
+            {
+                MessageBox.Show("Выберите правообладтеля для редактирования", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            string error = "";
+            if (string.IsNullOrEmpty(NameTextBoxPravoobladateli.Text))
+            {
+                error += "Введите ФИО правообладателя\n";
+            }
+            if (string.IsNullOrEmpty(INNTextBoxPravoobladateli.Text))
+            {
+                error += "Введите ИНН правообладателя\n";
+            }
+            if (string.IsNullOrEmpty(ORGNTextBoxPravoobladateli.Text))
+            {
+                error += "Введите ОГРН правообладателя\n";
+            }
+            if (string.IsNullOrEmpty(KPPTextBoxPravoobladateli.Text))
+            {
+                error += "Введите КПП правообладателя\n";
+            }
+            if (string.IsNullOrEmpty(PhoneTextBoxPravoobladateli.Text))
+            {
+                error += "Введите телефон правообладателя\n";
+            }
+            if (string.IsNullOrEmpty(EmailTextBoxPravoobladateli.Text))
+            {
+                error += "Введите электронную почту правообладателя\n";
+            }
+            if (string.IsNullOrEmpty(AddresTextBoxPravoobladateli.Text))
+            {
+                error += "Введите адрес регистрации правообладателя\n";
+            }
+            if (string.IsNullOrEmpty(IdTypeOfPravoobladateliTextBoxPravoobladateli.Text))
+            {
+                error += "Введите тип правообладателей\n";
+            }
+
+
+            if (error != "")
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                var pravoobladateli = new Pravoobladateli
+                {
+
+                    Name = NameTextBoxPravoobladateli.Text,
+                    INN = Convert.ToInt32(INNTextBoxPravoobladateli.Text),
+                    ORGN = Convert.ToInt32(ORGNTextBoxPravoobladateli.Text),
+                    KPP = Convert.ToInt32(KPPTextBoxPravoobladateli.Text),
+                    Phone = Convert.ToInt32(PhoneTextBoxPravoobladateli.Text),
+                    Email = EmailTextBoxPravoobladateli.Text,
+                    Addres = AddresTextBoxPravoobladateli.Text,
+                    IdTypeOfPravoobladateli = Convert.ToInt32(IdTypeOfPravoobladateliTextBoxPravoobladateli.Text)
+                };
+
+                db.Pravoobladatelis.Add(pravoobladateli);
+                db.SaveChanges();
+
+                LoadAllData();
+                MessageBox.Show("Правообладатель изменен", "Успех", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+
+            catch (Exception ex)
+            { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
 
         private void DeleteButtonPravoobladateli_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -558,13 +1035,115 @@ namespace пп_11
         private void AddButtonPravoobladateli_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
+            string error = "";
+            if (string.IsNullOrEmpty(NameTextBoxPravoobladateli.Text))
+            {
+                error += "Введите ФИО правообладателя\n";
+            }
+            if (string.IsNullOrEmpty(INNTextBoxPravoobladateli.Text))
+            {
+                error += "Введите ИНН правообладателя\n";
+            }
+            if (string.IsNullOrEmpty(ORGNTextBoxPravoobladateli.Text))
+            {
+                error += "Введите ОГРН правообладателя\n";
+            }
+            if (string.IsNullOrEmpty(KPPTextBoxPravoobladateli.Text))
+            {
+                error += "Введите КПП правообладателя\n";
+            }
+            if (string.IsNullOrEmpty(PhoneTextBoxPravoobladateli.Text))
+            {
+                error += "Введите телефон правообладателя\n";
+            }
+            if (string.IsNullOrEmpty(EmailTextBoxPravoobladateli.Text))
+            {
+                error += "Введите электронную почту правообладателя\n";
+            }
+            if (string.IsNullOrEmpty(AddresTextBoxPravoobladateli.Text))
+            {
+                error += "Введите адрес регистрации правообладателя\n";
+            }
+            if (string.IsNullOrEmpty(IdTypeOfPravoobladateliTextBoxPravoobladateli.Text))
+            {
+                error += "Введите тип правообладателей\n";
+            }
+
+
+            if (error != "")
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                var pravoobladateli = new Pravoobladateli
+                {
+
+                    Name = NameTextBoxPravoobladateli.Text,
+                    INN = Convert.ToInt32(INNTextBoxPravoobladateli.Text),
+                    ORGN = Convert.ToInt32(ORGNTextBoxPravoobladateli.Text),
+                    KPP = Convert.ToInt32(KPPTextBoxPravoobladateli.Text),
+                    Phone = Convert.ToInt32(PhoneTextBoxPravoobladateli.Text),
+                    Email = EmailTextBoxPravoobladateli.Text,
+                    Addres = AddresTextBoxPravoobladateli.Text,
+                    IdTypeOfPravoobladateli = Convert.ToInt32(IdTypeOfPravoobladateliTextBoxPravoobladateli.Text)
+                };
+
+                db.Pravoobladatelis.Add(pravoobladateli);
+                db.SaveChanges();
+
+                LoadAllData();
+                MessageBox.Show("Правообладатель добавлен", "Успех", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+
+            catch (Exception ex)
+            { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
         #endregion
 
         #region typeofpravoobladateli
         private void EditButtonTypeOfPravoobladateli_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            Name = NameTextBoxTypeOfPravoobladateli.Text;
+            if (TypeOfPravoobladateliDataGrid.SelectedItem is not TypeOfPravoobladateli selected)
+            {
+                MessageBox.Show("Выберите тип правообладтеля для редактирования", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            string error = "";
+            if (string.IsNullOrEmpty(NameTextBoxTypeOfPravoobladateli.Text))
+            {
+                error += "Введите наименование типа правообладателя\n";
+            }
+
+            if (error != "")
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                var typeOfPravoobladateli = new TypeOfPravoobladateli
+                {
+
+                    Name = NameTextBoxTypeOfPravoobladateli.Text
+                };
+
+                db.TypeOfPravoobladatelis.Add(typeOfPravoobladateli);
+                db.SaveChanges();
+
+                LoadAllData();
+                MessageBox.Show("Тип правообладателя добавлен", "Успех", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+
+            catch (Exception ex)
+            { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
 
         private void DeleteButtonTypeOfPravoobladateli_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -599,7 +1178,36 @@ namespace пп_11
 
         private void AddButtonTypeOfPravoobladateli_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            string error = "";
+            if (string.IsNullOrEmpty(NameTextBoxTypeOfPravoobladateli.Text))
+            {
+                error += "Введите наименование типа правообладателя\n";
+            }
 
+            if (error != "")
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                var typeOfPravoobladateli = new TypeOfPravoobladateli
+                {
+
+                    Name = NameTextBoxTypeOfPravoobladateli.Text
+                };
+
+                db.TypeOfPravoobladatelis.Add(typeOfPravoobladateli);
+                db.SaveChanges();
+
+                LoadAllData();
+                MessageBox.Show("Тип правообладателя добавлен", "Успех", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+
+            catch (Exception ex)
+            { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
         #endregion
 

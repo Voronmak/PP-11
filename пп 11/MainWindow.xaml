@@ -17,7 +17,7 @@
                HorizontalContentAlignment="Center" Foreground="White"/>
 
         <TabControl Grid.Row="1">
-            <TabItem Header="Земельные участки">
+            <TabItem Header="Земельные участки" x:Name="GroundPlaceTabItem">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*"/>
@@ -106,7 +106,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Права">
+            <TabItem Header="Права" x:Name="RightTabItem">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*"/>
@@ -184,7 +184,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Роли">
+            <TabItem Header="Роли" x:Name="RoleTabItem">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*"/>
@@ -248,7 +248,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Пользователи">
+            <TabItem Header="Пользователи" x:Name="UserTabItem">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*"/>
@@ -321,7 +321,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Виды прав">
+            <TabItem Header="Виды прав" x:Name="TypeOfRightsTabItem">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*"/>

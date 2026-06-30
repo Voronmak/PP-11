@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using пп_11.Data;
+using пп_11.Models;
 
 namespace пп_11
 {
@@ -20,6 +21,7 @@ namespace пп_11
     /// </summary>
     public partial class Login : Window
     {
+        private User user;
         private ContextDB db;
         public Login()
         {
@@ -51,17 +53,17 @@ namespace пп_11
 
         private void Enter()
         {
-            var EnterUser = db.Users.FirstOrDefault(x => x.Name == LoginTextBox.Text);
+            var user = db.Users.FirstOrDefault(x => x.Name == LoginTextBox.Text);
 
-            if (EnterUser == null)
+            if (user == null)
             {
                 ErrorLabel.Content = "Пользователь не существует";
                 return;
             }
 
-            if (EnterUser.Password == LoginPasswordBox.Password)
+            if (user.Password == LoginPasswordBox.Password)
             {
-                MainWindow mainWindow = new MainWindow();
+                MainWindow mainWindow = new MainWindow(user.Role.Name);
                 mainWindow.Show(); this.Close();
             }
             else

@@ -66,11 +66,15 @@ namespace пп_11
             "Рента"
         };
 
-        public MainWindow()
+        public MainWindow(string role)
         {
             InitializeComponent();
             db = new ContextDB();
             LoadAllData();
+            if (role == "")
+            {
+
+            }
         }
         private void LoadAllData()
         {

@@ -1337,7 +1337,7 @@ namespace пп_11
                 var gra = (from q in db.GroundPlaces
                            where q.KadastrNumber == Convert.ToInt32(FreeGroundPlaceComboBoxPoluchitObremenenie.Text)
                            select q).FirstOrDefault();
-                gra.Status = StatusList[1];
+                gra.Status = StatusList[1]; 
 
                 db.SaveChanges();
                 LoadAllData();

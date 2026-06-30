@@ -644,9 +644,9 @@
                         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
                             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center"
                                     Margin="10,-50,10,10" Height="35" Orientation="Horizontal" Background="#FFACF983"
-                                    x:Name="SformirovatObremenenieButton" MouseLeftButtonDown="SformirovatObremenenieButton_MouseLeftButtonDown"  Width="320" >
+                                    x:Name="SformirovatObremenenieButton" MouseLeftButtonDown="SformirovatObremenenieButton_MouseLeftButtonDown"   >
                                 <Image Source="/Images/free-icon-contract-5692221.png"  Height="25" />
-                                <Label Content="Сформировать обременение" FontSize="18" FontWeight="Bold" FontFamily="Georgia" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                <Label Content="Сформировать последнее обременение" FontSize="18" FontWeight="Bold" FontFamily="Georgia" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>

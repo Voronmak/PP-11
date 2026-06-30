@@ -100,7 +100,7 @@ namespace пп_11
             FreeGroundPlaceComboBoxPoluchitObremenenie.ItemsSource = (from g in db.GroundPlaces
                                                                       where g.Status == "Свободен"
                                                                       select g.KadastrNumber).ToList();
-            TypeOfObremeneniaComboBoxObremenenia.ItemsSource = TypeOfObremeneniaList;
+            TypeOfObremeneniaComboBoxPoluchitObremenenie.ItemsSource = TypeOfObremeneniaList;
             TypeRightComboBoxPoluchitObremenenie.ItemsSource = (from e in db.TypeOfRight
                                                                select e.Name).ToList();
             PravoobladatelComboBoxPoluchitObremenenie.ItemsSource = (from e in db.Pravoobladatelis
@@ -318,7 +318,11 @@ namespace пп_11
 
                 db.Rights.Add(right);
                 db.SaveChanges();
-
+                var gra = (from q in db.GroundPlaces
+                           where q.Id == Convert.ToInt32(IdGroundPlaceTextBoxRights.Text)
+                           select q).FirstOrDefault();
+                gra.Status = StatusList[1];
+                db.SaveChanges();
                 LoadAllData();
                 ClearRight();
                 MessageBox.Show("Право добавлено", "Успех", MessageBoxButton.OK,
@@ -1231,16 +1235,18 @@ namespace пп_11
                 .OrderByDescending(o => o.Id)
                 .FirstOrDefault();
 
-            var prava = (Models.Right)(from p in db.Rights where lastObremenenie.IdRight == p.Id select p);
+            var prava = db.Rights.FirstOrDefault(p => lastObremenenie.IdRight == p.Id);
             string statusText = prava.StatusOfRight ? "Активно" : "Неактивно";
-            var pravoobl = (Models.Pravoobladateli)(from pr in db.Pravoobladatelis where prava.IdPravoobladateli == pr.Id select pr);
+            var pravoobl = db.Pravoobladatelis
+                .FirstOrDefault(pr => prava.IdPravoobladateli == pr.Id);
 
-            var ground = (Models.GroundPlace)(from gr in db.GroundPlaces where prava.IdGroundPlace == gr.Id select gr);
-            
+            var ground = db.GroundPlaces
+                .FirstOrDefault(g => prava.IdGroundPlace == g.Id);
+
             if (saveFileDialog.ShowDialog() == true)
             {
                 var doc = new WordDocument();
-                var lines = new string[] { $"Правообладатель: {pravoobl.Name}", $"Документ-основание: {prava.DocumentOsnovanie}",$"Номер и дата регистрации: {lastObremenenie.NumberOfRegistration},{lastObremenenie.NumberOfRegistration}", $"Статус права: {statusText}", 
+                var lines = new string[] { $"Правообладатель: {pravoobl.Name}", $"Документ-основание: {prava.DocumentOsnovanie}",$"Номер и дата регистрации: {lastObremenenie.NumberOfRegistration},{lastObremenenie.DataOfRegistration}", $"Статус права: {statusText}", 
                     $"Выдано: Министерство сельского хозяйства Оренбургской области", $"Что выдано: {ground.KadastrNumber}" , $"Когда выдано: {prava.DateOfRegistration}"};
 
                 foreach (string line in lines)
@@ -1268,7 +1274,7 @@ namespace пп_11
         {
             string error = "";
             if (FreeGroundPlaceComboBoxPoluchitObremenenie.Text == "") error += "Выберите свободный участок\n";
-            if (TypeOfObremeneniaComboBoxObremenenia.Text == "") error += "Выберите тип обремениения\n";
+            if (TypeOfObremeneniaComboBoxPoluchitObremenenie.Text == "") error += "Выберите тип обремениения\n";
             if (TypeRightComboBoxPoluchitObremenenie.Text == "") error += "Выберите вид права\n";
             if (PravoobladatelComboBoxPoluchitObremenenie.Text == "") error += "Выберите правообладателя\n";
             if (YstanovlFaceComboBoxPoluchitObremenenie.Text == "") error += "Выберите цстановленное лицо\n";
@@ -1287,27 +1293,52 @@ namespace пп_11
                 int lastRegistrationNumber3 = db.Obremenenia.Any()
 ? db.Rights.Max(r => r.NumberOfRegistration)
 : 0000000;
-                var idground = from q in db.GroundPlaces
+                int idground = (from q in db.GroundPlaces
                                 where q.KadastrNumber == Convert.ToInt32(FreeGroundPlaceComboBoxPoluchitObremenenie.Text)
-                                select q.Id;
-                var idpravoobl = from p in db.Pravoobladatelis 
-                                 where p.Name == PravoobladatelComboBoxPoluchitObremenenie.Text
-                                 select p.Id;
-                var idtype = from t in db.TypeOfRight
-                             where t.Name == TypeRightComboBoxPoluchitObremenenie.Text
-                             select t.Id;
-                Right right = new Right(lastRegistrationNumber2++, DateTime.Now, "Разрешение на использование земель",true, Convert.ToInt32(idground), Convert.ToInt32(idpravoobl), Convert.ToInt32(idtype));
+                                select q.Id).FirstOrDefault();
+
+                // Получаем ID правообладателя
+                int idpravoobl = (from p in db.Pravoobladatelis
+                                  where p.Name == PravoobladatelComboBoxPoluchitObremenenie.Text
+                                  select p.Id).FirstOrDefault();
+
+                // Получаем ID типа права
+                int idtype = (from t in db.TypeOfRight
+                              where t.Name == TypeRightComboBoxPoluchitObremenenie.Text
+                              select t.Id).FirstOrDefault();
+
+                // Проверяем, что значения найдены
+                if (idground == 0 || idtype == 0)
+                {
+                    MessageBox.Show("Не удалось найти указанные данные в базе.");
+                    return;
+                }
+
+                // Создаем запись
+                Right right = new Right(
+                    lastRegistrationNumber2++,
+                    DateTime.Now,
+                    "Разрешение на использование земель",
+                    true,
+                    idground,
+                    idpravoobl,
+                    idtype
+                );
                 db.Rights.Add(right);
                 db.SaveChanges();
                 int idright = Convert.ToInt32(right.Id);
-                Obremenenia obremenenia = new Obremenenia(TypeOfObremeneniaComboBoxPoluchitObremenenie.Text,lastRegistrationNumber3,DateTime.Now, DiscribeTextBoxPoluchitObremenenie.Text, YstanovlFaceComboBoxPoluchitObremenenie.Text,idright);
+                Obremenenia obremenenia = new Obremenenia(TypeOfObremeneniaComboBoxPoluchitObremenenie.Text, lastRegistrationNumber3, DateTime.Now, DiscribeTextBoxPoluchitObremenenie.Text, YstanovlFaceComboBoxPoluchitObremenenie.Text, idright);
                 db.Obremenenia.Add(obremenenia);
+
+                var gra = (from q in db.GroundPlaces
+                           where q.KadastrNumber == Convert.ToInt32(FreeGroundPlaceComboBoxPoluchitObremenenie.Text)
+                           select q).FirstOrDefault();
+                gra.Status = StatusList[1];
+
                 db.SaveChanges();
+                LoadAllData();
             }
-            catch(Exception ex)
-            {
-                MessageBox.Show("Ошибка - проверьте данные", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            catch(Exception ex) {  MessageBox.Show(ex.Message); return;}
         
         }
         #region Clear

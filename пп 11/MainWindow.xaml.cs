@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using Grpc.Core;
 using IronWord;
 using IronWord.Models;
+using IronWord.Models.Enums;
 using Microsoft.Win32;
 using пп_11.Data;
 using пп_11.Enums;
@@ -65,15 +66,25 @@ namespace пп_11
             "Аренда",
             "Рента"
         };
+        private List<string> roles = new List<string>() {
+            "Администратор",
+            "Оператор"
+        };
 
         public MainWindow(string role)
         {
             InitializeComponent();
             db = new ContextDB();
             LoadAllData();
-            if (role == "")
+            if (role == "Оператор")
             {
-
+                MainTabControl.SelectedItem = PoluchitObremenenieTabItem;
+                GroundPlaceTabItem.Visibility = Visibility.Collapsed;
+                RightTabItem.Visibility = Visibility.Collapsed;
+                UserTabItem.Visibility = Visibility.Collapsed;
+                TypeOfRightsTabItem.Visibility = Visibility.Collapsed;
+                PravoobladateliTabItem.Visibility = Visibility.Collapsed;
+                TypeOfPravoobladateliTabItem.Visibility = Visibility.Collapsed;
             }
         }
         private void LoadAllData()
@@ -87,7 +98,6 @@ namespace пп_11
             UserDataGrid.ItemsSource = db.Users.ToList();
             TypeOfRightDataGrid.ItemsSource = db.TypeOfRight.ToList();
             TypeOfPravoobladateliDataGrid.ItemsSource = db.TypeOfPravoobladatelis.ToList();
-            RoleDataGrid.ItemsSource = db.Roles.ToList();
             RightDataGrid.ItemsSource = db.Rights.ToList();
             PravoobladateliDataGrid.ItemsSource = db.Pravoobladatelis.ToList();
             ObremeneneiaDataGrid.ItemsSource = db.Obremenenia.ToList();
@@ -100,7 +110,7 @@ namespace пп_11
             StatusTextBoxGroundPlace.ItemsSource = StatusList;
             TypeOfObremeneniaComboBoxObremenenia.ItemsSource = TypeOfObremeneniaList;
             YstanovlFaceTextBoxObremenenia.ItemsSource = YstanovlFaceList;
-
+            IdRoleTextBoxUser.ItemsSource = roles;
             FreeGroundPlaceComboBoxPoluchitObremenenie.ItemsSource = (from g in db.GroundPlaces
                                                                       where g.Status == "Свободен"
                                                                       select g.KadastrNumber).ToList();
@@ -439,114 +449,7 @@ namespace пп_11
         }
         #endregion
 
-        #region role
-        private void AddButtonRole_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            string error = "";
-            if (string.IsNullOrEmpty(NameTextBoxRole.Text))
-            {
-                error += "Введите наименование роли\n";
-            }
 
-            if (error != "")
-            {
-                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            try
-            {
-                var role = new Role
-                {
-
-                    Name = NameTextBoxRole.Text,
-                    Discribe = DiscribeTextBoxRole.Text
-
-                };
-
-                db.Roles.Add(role);
-                db.SaveChanges();
-
-                LoadAllData();
-                ClearRole();
-                MessageBox.Show("Роль добавлена", "Успех", MessageBoxButton.OK,
-                    MessageBoxImage.Information);
-            }
-
-            catch (Exception ex)
-            { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
-        }
-
-        private void DeleteButtonRole_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (RoleDataGrid.SelectedItem is not Role selected)
-            {
-                MessageBox.Show("Выберите роль для удаления", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            var result = MessageBox.Show($"Удалить роль '{selected.Name}'?\n", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-
-            if (result == MessageBoxResult.Yes)
-            {
-                try
-                {
-                    db.Roles.Remove(selected);
-                    db.SaveChanges();
-
-                    LoadAllData();
-                    ClearRole();
-
-                    MessageBox.Show("Роль удалена", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-
-                catch (Exception ex)
-                { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
-
-            }
-        }
-
-        private void EditButtonRole_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Name = NameTextBoxRole.Text;
-            if (RoleDataGrid.SelectedItem is not Role selected)
-            {
-                MessageBox.Show("Выберите роль для редактирования", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            string error = "";
-            if (string.IsNullOrEmpty(NameTextBoxRole.Text))
-            {
-                error += "Введите наименование роли\n";
-            }
-
-            if (error != "")
-            {
-                MessageBox.Show(error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            try
-            {
-
-                selected.Name = NameTextBoxRole.Text;
-                    selected.Discribe = DiscribeTextBoxRole.Text;
-
-                db.SaveChanges();
-
-                LoadAllData();
-                ClearRole();
-                MessageBox.Show("Роль изменена", "Успех", MessageBoxButton.OK,
-                    MessageBoxImage.Information);
-            }
-
-            catch (Exception ex)
-            { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
-        }
-        
-        #endregion
 
         #region user
         private void AddButtonUser_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -580,11 +483,11 @@ namespace пп_11
                 var user = new User
                 {
 
-                    Name = NameTextBoxRole.Text,
-                    Password = DiscribeTextBoxRole.Text,
+                    Name = LoginTextBoxUser.Text,
+                    Password = PasswordPasswordBoxUser.Text,
                     Status = Convert.ToBoolean(StatusCheckBoxUser),
                     DateCreate = Convert.ToDateTime(DataCreateTextBoxUser.Text),
-                    IdRole = Convert.ToInt32(IdRoleTextBoxUser.Text)
+                    Role = IdRoleTextBoxUser.Text
                 };
 
                 db.Users.Add(user);
@@ -665,11 +568,11 @@ namespace пп_11
 
             try
             {
-                selected.Name = NameTextBoxRole.Text;
-                selected.Password = DiscribeTextBoxRole.Text;
+                selected.Name = LoginTextBoxUser.Text;
+                selected.Password = PasswordPasswordBoxUser.Text;
                 selected.Status = Convert.ToBoolean(StatusCheckBoxUser);
                 selected.DateCreate = Convert.ToDateTime(DataCreateTextBoxUser.Text);
-                selected.IdRole = Convert.ToInt32(IdRoleTextBoxUser.Text);
+                selected.Role =IdRoleTextBoxUser.Text;
 
                 db.SaveChanges();
 
@@ -713,9 +616,9 @@ namespace пп_11
             try
             {
 
-                selected.Name = NameTextBoxRole.Text;
+                selected.Name = NameTextBoxTypeOfRight.Text;
                 selected.CodeName = Convert.ToInt32(CodeNameTextBoxTypeOfRight.Text);
-                selected.Dicribe = DiscribeTextBoxRole.Text;
+                selected.Dicribe = DiscribeTextBoxTypeOfRight.Text;
 
                 db.SaveChanges();
 
@@ -1001,9 +904,9 @@ namespace пп_11
             {
 
                 selected.Name = NameTextBoxPravoobladateli.Text;
-                selected.INN = Convert.ToInt32(INNTextBoxPravoobladateli.Text);
-                selected.ORGN = Convert.ToInt32(ORGNTextBoxPravoobladateli.Text);
-                selected.KPP = Convert.ToInt32(KPPTextBoxPravoobladateli.Text);
+                selected.INN = Convert.ToUInt32(INNTextBoxPravoobladateli.Text);
+                selected.ORGN = Convert.ToUInt32(ORGNTextBoxPravoobladateli.Text);
+                selected.KPP = Convert.ToUInt32(KPPTextBoxPravoobladateli.Text);
                 selected.Phone = Convert.ToInt32(PhoneTextBoxPravoobladateli.Text);
                 selected.Email = EmailTextBoxPravoobladateli.Text;
                 selected.Addres = AddresTextBoxPravoobladateli.Text;
@@ -1101,9 +1004,9 @@ namespace пп_11
                 {
 
                     Name = NameTextBoxPravoobladateli.Text,
-                    INN = Convert.ToInt32(INNTextBoxPravoobladateli.Text),
-                    ORGN = Convert.ToInt32(ORGNTextBoxPravoobladateli.Text),
-                    KPP = Convert.ToInt32(KPPTextBoxPravoobladateli.Text),
+                    INN = Convert.ToUInt32(INNTextBoxPravoobladateli.Text),
+                    ORGN = Convert.ToUInt32(ORGNTextBoxPravoobladateli.Text),
+                    KPP = Convert.ToUInt32(KPPTextBoxPravoobladateli.Text),
                     Phone = Convert.ToInt32(PhoneTextBoxPravoobladateli.Text),
                     Email = EmailTextBoxPravoobladateli.Text,
                     Addres = AddresTextBoxPravoobladateli.Text,
@@ -1118,9 +1021,10 @@ namespace пп_11
                 MessageBox.Show("Правообладатель добавлен", "Успех", MessageBoxButton.OK,
                     MessageBoxImage.Information);
             }
-
             catch (Exception ex)
             { MessageBox.Show("Ошибка", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
+
+
         }
         #endregion
 
@@ -1231,13 +1135,21 @@ namespace пп_11
 
         private void SformirovatObremenenieButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+
+            var lastObremenenie = db.Obremenenia
+    .OrderByDescending(o => o.Id)
+    .FirstOrDefault();
+
+            if (lastObremenenie == null)
+            {
+                MessageBox.Show("Нет существующих обременений", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             var saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Документ Word (*.docx)|*.docx";
             saveFileDialog.FileName = "МойДокумент.docx";
 
-            var lastObremenenie = db.Obremenenia
-                .OrderByDescending(o => o.Id)
-                .FirstOrDefault();
+
 
             var prava = db.Rights.FirstOrDefault(p => lastObremenenie.IdRight == p.Id);
             string statusText = prava.StatusOfRight ? "Активно" : "Неактивно";
@@ -1250,9 +1162,57 @@ namespace пп_11
             if (saveFileDialog.ShowDialog() == true)
             {
                 var doc = new WordDocument();
-                var lines = new string[] { $"Правообладатель: {pravoobl.Name}", $"Документ-основание: {prava.DocumentOsnovanie}",$"Номер и дата регистрации: {lastObremenenie.NumberOfRegistration},{lastObremenenie.DataOfRegistration}", $"Статус права: {statusText}", 
-                    $"Выдано: Министерство сельского хозяйства Оренбургской области", $"Что выдано: {ground.KadastrNumber}" , $"Когда выдано: {prava.DateOfRegistration}"};
+                var section = doc.Sections[0];
 
+
+                section.PageSetup.SetTopMargin(2, MeasurementUnit.Centimeter);
+                section.PageSetup.SetBottomMargin(2, MeasurementUnit.Centimeter);
+                section.PageSetup.SetLeftMargin(3, MeasurementUnit.Centimeter);
+                section.PageSetup.SetRightMargin(1.5, MeasurementUnit.Centimeter);
+
+
+                section.PageSetup.Orientation = PageOrientation.Portrait;
+
+                var lines = new string[] { 
+                    $"Правообладатель: {pravoobl.Name},{pravoobl.ORGN}, {pravoobl.KPP}",
+                    $"\rИНН: {pravoobl.INN}",
+                    $"\rОГРН: {pravoobl.ORGN}",
+                    $"\rКПП: {pravoobl.KPP}",
+                    $"\rЮр-Адрес: {pravoobl.Addres}",
+                    $"Документ-основание: {prava.DocumentOsnovanie}",
+                    $"Номер и дата регистрации: {lastObremenenie.NumberOfRegistration}, {lastObremenenie.DataOfRegistration}", 
+                    $"Статус права: {statusText}", 
+                    $"Выдано: Министерство сельского хозяйства Оренбургской области", 
+                    $"Что выдано: {ground.KadastrNumber}" , 
+                    $"Когда выдано: {prava.DateOfRegistration}",
+                    "", 
+                    "Подпись",
+                    "________________________",
+                    "",
+                    "Дата",
+                    "____________"};
+                var title = new string[]
+                {
+                    "Обременение",
+                    ""
+                };
+                foreach (string t in title)
+                {
+
+                    var paragraph = new Paragraph();
+                    paragraph.Alignment = IronSoftware.Abstractions.Word.TextAlignment.Center;
+                    var textRun = new IronWord.Models.Run(new TextContent(t));
+                    textRun.Style = new TextStyle()
+                    {
+                        FontSize = 16,
+                        Color = Color.Black,
+                        TextFont = new Font() { FontFamily = "Times New Roman" },
+                        IsBold = true,
+                    };
+
+                    paragraph.AddChild(textRun);
+                    section.AddParagraph(paragraph);
+                }
                 foreach (string line in lines)
                 {
 
@@ -1262,11 +1222,11 @@ namespace пп_11
                     {
                         FontSize = 14,
                         Color = Color.Black,
-                        TextFont = new Font() { FontFamily = "Arial" }
+                        TextFont = new Font() { FontFamily = "Times New Roman" }
                     };
 
                     paragraph.AddChild(textRun);
-                    doc.AddParagraph(paragraph);
+                    section.AddParagraph(paragraph);
                 }
 
                 doc.SaveAs(saveFileDialog.FileName);
@@ -1301,17 +1261,16 @@ namespace пп_11
                                 where q.KadastrNumber == Convert.ToInt32(FreeGroundPlaceComboBoxPoluchitObremenenie.Text)
                                 select q.Id).FirstOrDefault();
 
-                // Получаем ID правообладателя
+
                 int idpravoobl = (from p in db.Pravoobladatelis
                                   where p.Name == PravoobladatelComboBoxPoluchitObremenenie.Text
                                   select p.Id).FirstOrDefault();
 
-                // Получаем ID типа права
                 int idtype = (from t in db.TypeOfRight
                               where t.Name == TypeRightComboBoxPoluchitObremenenie.Text
                               select t.Id).FirstOrDefault();
 
-                // Проверяем, что значения найдены
+
                 if (idground == 0 || idtype == 0)
                 {
                     MessageBox.Show("Не удалось найти указанные данные в базе.");
@@ -1367,11 +1326,7 @@ namespace пп_11
             IdTypeOfRightTextBoxRights.Text = null;
         }
 
-        private void ClearRole()
-        {
-            NameTextBoxRole.Text = null;
-            DiscribeTextBoxRole.Text = null;
-        }
+
 
         private void ClearUser()
         {
@@ -1447,14 +1402,7 @@ namespace пп_11
         }
 
  
-        private void RoleDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (RoleDataGrid.SelectedItem is Role selected)
-            {
-                NameTextBoxRole.Text = selected.Name;
-                DiscribeTextBoxRole.Text = selected.Discribe;
-            }
-        }
+
 
 
         private void UserDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1465,7 +1413,7 @@ namespace пп_11
                 PasswordPasswordBoxUser.Text = selected.Password;
                 StatusCheckBoxUser.IsChecked = selected.Status;
                 DataCreateTextBoxUser.SelectedDate = selected.DateCreate;
-                IdRoleTextBoxUser.Text = selected.IdRole.ToString();
+                IdRoleTextBoxUser.Text = selected.Role.ToString();
             }
         }
 
@@ -1517,5 +1465,103 @@ namespace пп_11
             }
         }
         #endregion
+
+        private void ToDocObremBurron_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+            if (ObremeneneiaDataGrid.SelectedItem is not Obremenenia selected)
+            {
+                MessageBox.Show("Выберите обременение для редактирования", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            var saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Документ Word (*.docx)|*.docx";
+            saveFileDialog.FileName = "МойДокумент.docx";
+
+
+
+            var prava = db.Rights.FirstOrDefault(p => selected.IdRight == p.Id);
+            string statusText = prava.StatusOfRight ? "Активно" : "Неактивно";
+            var pravoobl = db.Pravoobladatelis
+                .FirstOrDefault(pr => prava.IdPravoobladateli == pr.Id);
+
+            var ground = db.GroundPlaces
+                .FirstOrDefault(g => prava.IdGroundPlace == g.Id);
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                var doc = new WordDocument();
+                var section = doc.Sections[0];
+
+
+                section.PageSetup.SetTopMargin(2, MeasurementUnit.Centimeter);
+                section.PageSetup.SetBottomMargin(2, MeasurementUnit.Centimeter);
+                section.PageSetup.SetLeftMargin(3, MeasurementUnit.Centimeter);
+                section.PageSetup.SetRightMargin(1.5, MeasurementUnit.Centimeter);
+
+
+                section.PageSetup.Orientation = PageOrientation.Portrait;
+
+                var lines = new string[] {
+                    $"Правообладатель: {pravoobl.Name},{pravoobl.ORGN}, {pravoobl.KPP}",
+                    $"\rИНН: {pravoobl.INN}",
+                    $"\rОГРН: {pravoobl.ORGN}",
+                    $"\rКПП: {pravoobl.KPP}",
+                    $"\rЮр-Адрес: {pravoobl.Addres}",
+                    $"Документ-основание: {prava.DocumentOsnovanie}",
+                    $"Номер и дата регистрации: {selected.NumberOfRegistration}, {selected.DataOfRegistration}",
+                    $"Статус права: {statusText}",
+                    $"Выдано: Министерство сельского хозяйства Оренбургской области",
+                    $"Что выдано: {ground.KadastrNumber}" ,
+                    $"Когда выдано: {prava.DateOfRegistration}",
+                    "",
+                    "Подпись",
+                    "________________________",
+                    "",
+                    "Дата",
+                    "____________"};
+                var title = new string[]
+                {
+                    "Обременение",
+                    ""
+                };
+                foreach (string t in title)
+                {
+
+                    var paragraph = new Paragraph();
+                    paragraph.Alignment = IronSoftware.Abstractions.Word.TextAlignment.Center;
+                    var textRun = new IronWord.Models.Run(new TextContent(t));
+                    textRun.Style = new TextStyle()
+                    {
+                        FontSize = 16,
+                        Color = Color.Black,
+                        TextFont = new Font() { FontFamily = "Times New Roman" },
+                        IsBold = true,
+                    };
+
+                    paragraph.AddChild(textRun);
+                    section.AddParagraph(paragraph);
+                }
+                foreach (string line in lines)
+                {
+
+                    var paragraph = new Paragraph();
+                    var textRun = new IronWord.Models.Run(new TextContent(line));
+                    textRun.Style = new TextStyle()
+                    {
+                        FontSize = 14,
+                        Color = Color.Black,
+                        TextFont = new Font() { FontFamily = "Times New Roman" }
+                    };
+
+                    paragraph.AddChild(textRun);
+                    section.AddParagraph(paragraph);
+                }
+
+                doc.SaveAs(saveFileDialog.FileName);
+                MessageBox.Show("Документ Word успешно сохранен");
+            }
+        }
     }
 }

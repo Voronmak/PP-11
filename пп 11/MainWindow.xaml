@@ -16,7 +16,7 @@
                FontSize="30" FontWeight="Bold" VerticalContentAlignment="Center"
                HorizontalContentAlignment="Center" Foreground="White"/>
 
-        <TabControl Grid.Row="1">
+        <TabControl Grid.Row="1" Name="MainTabControl">
             <TabItem Header="Земельные участки" x:Name="GroundPlaceTabItem">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -184,69 +184,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Роли" x:Name="RoleTabItem">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="0.8*"/>
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="278*"/>
-                        <ColumnDefinition Width="229*"/>
-                        <ColumnDefinition Width="507*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <DataGrid Margin="5,5,5,5" Background="#FFD2D2D2" AutoGenerateColumns="False" x:Name="RoleDataGrid" SelectionChanged="RoleDataGrid_SelectionChanged" Grid.ColumnSpan="2">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Id Роли" Binding="{Binding Id}"/>
-                            <DataGridTextColumn Header="Наименование" Binding="{Binding Name}"/>
-                            <DataGridTextColumn Header="Краткое описание" Binding="{Binding Discribe }"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-
-                    <StackPanel Grid.Row="0" Grid.Column="2" Margin="5,5,5,5">
-                        <Label Content="Наименование" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
-                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="NameTextBoxRole"/>
-                        <Label Content="Краткое описание" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
-                        <TextBox Margin="5, -5, 5, 5" Height="25" x:Name="DiscribeTextBoxRole"/>
-                    </StackPanel>
-
-                    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
-                        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" 
-                                    Margin="10,5,5,5" Height="25" Orientation="Horizontal" Background="#FF83F9AA"
-                                    x:Name="AddButtonRole" MouseLeftButtonDown="AddButtonRole_MouseLeftButtonDown">
-                            <Image Source="/Images/free-icon-calendar-add-17325064.png" Height="25"/>
-                            <Label Content="Добавить"/>
-                        </StackPanel>
-
-                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center"
-                                    Margin="105,5,5,5" Height="25" Orientation="Horizontal" Background="#FFF98383"
-                                    x:Name="DeleteButtonRole" MouseLeftButtonDown="DeleteButtonRole_MouseLeftButtonDown">
-                                <Image Source="/Images/free-icon-delete-folder-17807612.png" Height="25" />
-                                <Label Content="Удалить"/>
-                            </StackPanel>
-                        </StackPanel>
-
-                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center"
-                                    Margin="95,5,5,5" Height="25" Orientation="Horizontal" Background="#FF8395F9"
-                                    x:Name="EditButtonRole" MouseLeftButtonDown="EditButtonRole_MouseLeftButtonDown">
-                                <Image Source="/Images/free-icon-editing-2356780.png"  Height="25" />
-                                <Label Content="Редактировать"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </StackPanel>
-
-                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"
-                                    Margin="5,0,0,0" Height="25" Orientation="Horizontal" Background="#FF9C83F9"
-                                    x:Name="RefreshButton2" MouseLeftButtonDown="RefreshButtonGroundPlace_MouseLeftButtonDown">
-                        <Image Source="/Images/free-icon-refresh-7037662.png"  Height="25" />
-                        <Label Content="Обновить"/>
-                    </StackPanel>
-                </Grid>
-            </TabItem>
+            
 
             <TabItem Header="Пользователи" x:Name="UserTabItem">
                 <Grid>
@@ -282,7 +220,7 @@
                         <Label Content="ДатаСоздания" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
                         <DatePicker Margin="5, -5, 5, 5" Height="25" x:Name="DataCreateTextBoxUser"/>
                         <Label Content="Id Роли" Margin="5,-5,5,5" FontFamily="Georgia" FontWeight="Bold"/>
-                        <TextBox Margin="5, -5, 5, 5" Height="20" x:Name="IdRoleTextBoxUser"/>
+                        <ComboBox Height="20" x:Name="IdRoleTextBoxUser"/>
                     </StackPanel>
 
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
@@ -387,7 +325,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Обременения">
+            <TabItem Header="Обременения" Name="ObremenenyeTabItem">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*"/>
@@ -459,10 +397,17 @@
                         <Image Source="/Images/free-icon-refresh-7037662.png"  Height="25" />
                         <Label Content="Обновить"/>
                     </StackPanel>
+
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"
+                                    Margin="5" Height="25" Orientation="Horizontal" Background="#FFDAD0FF"
+                                    x:Name="ToDocObremBurron" MouseLeftButtonDown="ToDocObremBurron_MouseLeftButtonDown">
+                        <Image Source="/Images/free-icon-accept-5266662.png"  Height="25" />
+                        <Label Content="Сформировать отчет"/>
+                    </StackPanel>
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Правообладатели">
+            <TabItem Header="Правообладатели" Name="PravoobladateliTabItem">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*"/>
@@ -544,7 +489,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Тип правообладателей">
+            <TabItem Header="Тип правообладателей" Name="TypeOfPravoobladateliTabItem">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*"/>
@@ -605,7 +550,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Получить обременение">
+            <TabItem Header="Получить обременение" Name="PoluchitObremenenieTabItem">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="407*"/>

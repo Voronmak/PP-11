@@ -63,7 +63,7 @@ namespace пп_11
 
             if (user.Password == LoginPasswordBox.Password)
             {
-                MainWindow mainWindow = new MainWindow(user.Role.Name);
+                MainWindow mainWindow = new MainWindow(user.Role);
                 mainWindow.Show(); this.Close();
             }
             else

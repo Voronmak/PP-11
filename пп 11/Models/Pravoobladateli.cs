@@ -14,13 +14,13 @@ namespace пп_11.Models
 
         public string Name { get; set; }
          
-        public int INN { get; set; }
+        public long INN { get; set; }
 
-        public int ORGN { get; set; }
+        public long ORGN { get; set; }
 
-        public int KPP { get; set; }
+        public long KPP { get; set; }
 
-        public int Phone { get; set; }
+        public long Phone { get; set; }
 
         public string Email { get; set; }
 
@@ -31,7 +31,7 @@ namespace пп_11.Models
        [ForeignKey(nameof(IdTypeOfPravoobladateli))]
        public TypeOfPravoobladateli? TypeOfPravoobladateli { get; set; } 
 
-       public Pravoobladateli(string name, int inn, int orgn, int kpp, int phone, string email, string addres, int idtypeofpravoobladateli)
+       public Pravoobladateli(string name, long inn, long orgn, long kpp, long phone, string email, string addres, int idtypeofpravoobladateli)
         {
             Name = name;
             INN = inn;

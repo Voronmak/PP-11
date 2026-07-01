@@ -18,7 +18,6 @@ namespace пп_11.Data
 
         public DbSet<Right> Rights { get; set; }
 
-        public DbSet<Role> Roles { get; set; }
 
         public DbSet<TypeOfPravoobladateli> TypeOfPravoobladatelis { get; set; }
 
@@ -28,7 +27,7 @@ namespace пп_11.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-O44JPRI\SQLEXPRESS;Database=PP2;Trusted_Connection=True;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-O44JPRI\SQLEXPRESS;Database=PP5;Trusted_Connection=True;TrustServerCertificate=True;");
         }
     }
 }

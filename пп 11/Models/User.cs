@@ -19,18 +19,16 @@ namespace пп_11.Models
 
         public DateTime DateCreate { get; set; } 
 
-        public int IdRole { get; set; }
+        public string Role { get; set; }
 
-        [ForeignKey(nameof(IdRole))]
-        public Role? Role { get; set; }
 
-        public User(string name, string password, bool status, DateTime dateCreate, int idRole)
+        public User(string name, string password, bool status, DateTime dateCreate, string role)
         {
             Name = name;
             Password = password;
             Status = status;
             DateCreate = dateCreate;
-            IdRole = idRole;
+            Role = role;
         }
         public User() { }
     }

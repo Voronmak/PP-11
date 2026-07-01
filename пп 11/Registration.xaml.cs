@@ -33,20 +33,6 @@ namespace пп_11
             InitializeComponent();
             db  = new ContextDB();
             RoleComboBox.ItemsSource = roles;
-            if (!db.Roles.Any())
-            {
-                db.Roles.Add(new Models.Role
-                {
-                    Name = "Администратор",
-                    Discribe = "Может все"
-                });
-                db.Roles.Add(new Models.Role
-                {
-                    Name = "Оператор",
-                    Discribe = "Может не все"
-                });
-                db.SaveChanges();
-            }
         }
 
         private void RegistrationButton_Click(object sender, RoutedEventArgs e)
@@ -69,8 +55,7 @@ namespace пп_11
                     ErrorRegisterLabel.Content = "Пользователь с таким Логином уже существует"; return;
                 }
 
-                int idRole = db.Roles.First(r => r.Name == RoleComboBox.Text).Id;
-                User user1 = new User(RegistrationTextBox.Text, RegistrationPasswordBox.Password,true, DateTime.Parse(BirchsdayDatePicker.Text),idRole);
+                User user1 = new User(RegistrationTextBox.Text, RegistrationPasswordBox.Password,true, DateTime.Parse(BirchsdayDatePicker.Text), RoleComboBox.Text);
 
                 db.Users.Add(user1);
                 db.SaveChanges();

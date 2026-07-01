@@ -205,8 +205,8 @@
                             <DataGridTextColumn Header="Логин" Binding="{Binding Name}"/>
                             <DataGridTextColumn Header="Пароль" Binding="{Binding Password }"/>
                             <DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
-                            <DataGridTextColumn Header="ДатаСоздания" Binding="{Binding DataCreate}"/>
-                            <DataGridTextColumn Header="Id Роли" Binding="{Binding IdRole }"/>
+                            <DataGridTextColumn Header="ДатаСоздания" Binding="{Binding DateCreate}"/>
+                            <DataGridTextColumn Header="Id Роли" Binding="{Binding Role }"/>
                         </DataGrid.Columns>
                     </DataGrid>
 

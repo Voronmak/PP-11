@@ -217,7 +217,6 @@ namespace пп_11
 
         private void ChangeButtonGroundPlace_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            int KadastrNumber = Convert.ToInt32(KadastrNumberTextBoxGroundPlace.Text);
             if (GroundPlaceDataGrid.SelectedItem is not GroundPlace selected)
             {
                 MessageBox.Show("Выберите земельный участок для редактирования", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -379,7 +378,6 @@ namespace пп_11
 
         private void EditButtonRight_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            int NumberOfRegistration = Convert.ToInt32(NumberOfRegistrationTextBoxRights.Text)  ;
             if (RightDataGrid.SelectedItem is not Right selected)
             {
                 MessageBox.Show("Выберите право для редактирования", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -535,7 +533,6 @@ namespace пп_11
 
         private void EditButtonUser_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Name = LoginTextBoxUser.Text;
             if (UserDataGrid.SelectedItem is not User selected)
             {
                 MessageBox.Show("Выберите пользователя для редактирования", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -590,7 +587,6 @@ namespace пп_11
         #region typeofright
         private void EditButtonTypeOfRight_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Name = NameTextBoxTypeOfRight.Text;
             if (TypeOfRightDataGrid.SelectedItem is not TypeOfRight selected)
             {
                 MessageBox.Show("Выберите вид права для редактирования", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -703,7 +699,6 @@ namespace пп_11
         #region obremenenia
         private void EditButtonObremenenia_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            int NumberOfRegistration = Convert.ToInt32(NumberOfRegistrationBoxObremenenia.Text);
             if (ObremeneneiaDataGrid.SelectedItem is not Obremenenia selected)
             {
                 MessageBox.Show("Выберите обременение для редактирования", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -852,7 +847,6 @@ namespace пп_11
         #region pravoobladateli
         private void EditButtonPravoobladateli_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Name = NameTextBoxPravoobladateli.Text;
             if (PravoobladateliDataGrid.SelectedItem is not Pravoobladateli selected)
             {
                 MessageBox.Show("Выберите правообладтеля для редактирования", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -1031,7 +1025,6 @@ namespace пп_11
         #region typeofpravoobladateli
         private void EditButtonTypeOfPravoobladateli_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Name = NameTextBoxTypeOfPravoobladateli.Text;
             if (TypeOfPravoobladateliDataGrid.SelectedItem is not TypeOfPravoobladateli selected)
             {
                 MessageBox.Show("Выберите тип правообладтеля для редактирования", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
